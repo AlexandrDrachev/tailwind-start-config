@@ -1,40 +1,43 @@
-import React, { Component } from 'react';
+import React from 'react';
+
+import { connect } from 'react-redux';
 
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import Spinner from "../spinner";
+import { apiKey } from "../../keys";
 
-const apiKey = 'AIzaSyBFJFYtpM5uPMKOyqW2PZYmXR94OOgknhM';
+const MapContainer = (props) => {
 
-let lat, lng;
+        const { lati, longi } = props;
+    console.log('lati:', lati);
+    console.log('longi:', longi);
 
-navigator.geolocation.getCurrentPosition((position) => {
-    lat = position.coords.latitude;
-    lng = position.coords.longitude;
-});
-
-export class MapContainer extends React.Component {
-
-    render() {
-
-        if (!lat || !lng) {
-            return '...loading'
+    if (!lati || !longi) {
+            return <Spinner />
         }
 
         return (
             <Map
                 className="map-style"
                 initialCenter={{
-                    lat: lat,
-                    lng: lng
+                    lat: lati,
+                    lng: longi
                 }}
-                google={this.props.google} zoom={10}>
+                google={props.google} zoom={10}>
 
                 <Marker onClick={() => {}}
                         name={'Current location'} />
             </Map>
         );
-    };
-}
+};
 
-export default GoogleApiWrapper({
+const mapStateToProps = (state) => {
+    return {
+        lati: state.locationsState.latitudeCity,
+        longi: state.locationsState.longitudeCity
+    };
+};
+
+export default connect(mapStateToProps)(GoogleApiWrapper({
     apiKey: apiKey
-})(MapContainer);
+})(MapContainer));
