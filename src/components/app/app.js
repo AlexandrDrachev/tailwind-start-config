@@ -4,7 +4,7 @@ import Header from "../header";
 import { withService } from "../hoc";
 import Autorisation from "../autorisation";
 import WeatherToday from "../weathers/weather-today";
-import OneDayWeek from "../weathers/one-day-week";
+import WeatherWeek from "../weathers/weather-week";
 
 const App = ({ serviceApi }) => {
 
@@ -62,7 +62,7 @@ const App = ({ serviceApi }) => {
             <Header />
             <Autorisation />
             <WeatherToday />
-            <OneDayWeek />
+            <WeatherWeek />
         </div>
     );
 };

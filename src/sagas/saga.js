@@ -1,11 +1,18 @@
 import { put, all, call, delay, take } from 'redux-saga/effects';
 
-import { getLatitudeCity, getLongitudeCity, autorisationTest } from "../actions/action";
+import {
+    getLatitudeCity,
+    getLongitudeCity,
+    autorisationTest,
+} from "../actions/action";
+
+import { watchCurrentCity } from "../components/weathers/sagas/locations-saga";
 
 export function* rootSagas() {
     yield all([
         watchCoordsFunc(),
-        takeAutorisation()
+        takeAutorisation(),
+        watchCurrentCity()
     ]);
 }
 
@@ -38,5 +45,7 @@ function* takeAutorisation() {
 function* sagaTestAutorisation() {
     yield put(autorisationTest());
 }
+
+
 
 

@@ -8,8 +8,8 @@ export default class ServiceApi {
         'key=1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v&location=%D0%B7%D0%B0%D0%BF%D0%BE%D1%80%D0%BE%D0%B6%D1%8C%D0%B5';
     baseUrl = 'api.openweathermap.org/data/2.5/weather?';
 
-    getUrl = () => {
-        return {};
+    getInitialCoords = () => {
+
     };
 
 
