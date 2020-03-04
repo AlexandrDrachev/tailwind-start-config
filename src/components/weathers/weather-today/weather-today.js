@@ -3,17 +3,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import GoogleApiWrapper from '../../google-api/google-api';
-import { clearFormCity, getCurrentCity, getNewLatitudeCity, getNewLongitudeCity } from "../../../actions/action";
+import { clearFormCity } from "../../../actions/action";
+import { getInputCity, getNewLocation } from "../weather-actions";
+import Spinner from "../../spinner";
 
-const WeatherToday = ({ lati, longi, city, getLati, getLongi, getCity, clearCity }) => {
+const WeatherToday = ({ lati, longi, inputCity, getCity, clearCity, newLocation, getNewLocation, newCurrentCity }) => {
 
-    console.log('lati: ', lati);
-    console.log('longi: ', longi);
-    console.log('city: ', city);
-
+    console.log('newLocation: ', newLocation);
     const onSubmit = (e) => {
         e.preventDefault();
+        getNewLocation(inputCity);
         clearCity();
+    };
+
+    const onChangeCity = (e) => {
+        return getCity(e.target.value);
     };
 
     return (
@@ -22,9 +26,10 @@ const WeatherToday = ({ lati, longi, city, getLati, getLongi, getCity, clearCity
                 <div className="w-full flex justify-start p-2 bg-yellow-600 rounded-t-md">
                     <form onSubmit={(e) => onSubmit(e)}>
                         <input
-                            onChange={(e) => getCity(e.target.value)}
+                            onChange={(e) => onChangeCity(e)}
                             className="border border-gray-400 rounded bg-gray-300 focus:border focus:border-blue-300"
                             type="text"
+                            value={ inputCity }
                             placeholder="city"/>
                     </form>
                 </div>
@@ -51,7 +56,7 @@ const WeatherToday = ({ lati, longi, city, getLati, getLongi, getCity, clearCity
                 </div>
             </div>
             <div className="h-full flex flex-col items-center justify-center mb:order-2 mx-5">
-                <GoogleApiWrapper />
+                {newLocation ? <GoogleApiWrapper lati={newLocation.latitude} longi={newLocation.longitude} newLocation={newLocation} /> : <Spinner /> }
                 <button className="bg-green-500 w-full text-2xl text-white font-bold py-3 rounded hover:bg-green-600">
                     week weather forecast
                 </button>
@@ -64,15 +69,15 @@ const mapStateToProps = (state) => {
     return {
         lati: state.locationsState.latitudeCity,
         longi: state.locationsState.longitudeCity,
-        city: state.locationsState.currentCity,
+        inputCity: state.locationsState.inputCity,
+        newLocation: state.locationsState.newLocation
     };
 };
 
 const mapDispatchToProps = {
-    getLati: getNewLatitudeCity,
-    getLongi: getNewLongitudeCity,
-    getCity: getCurrentCity,
-    clearCity: clearFormCity
+    getCity: getInputCity,
+    clearCity: clearFormCity,
+    getNewLocation: getNewLocation
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WeatherToday);

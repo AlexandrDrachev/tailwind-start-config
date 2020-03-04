@@ -1,8 +1,8 @@
 export const initialLocationsState = {
-    latitudeCity: "",
-    longitudeCity: "",
-    currentCity: "",
-    inputCity: ""
+    latitudeCity: null,
+    longitudeCity: null,
+    inputCity: "",
+    newLocation: null
 };
 
 export const locationReducer = (state, action) => {
@@ -22,25 +22,22 @@ export const locationReducer = (state, action) => {
                 ...state,
                 longitudeCity: action.payload
             };
-        case 'GET_NEW_LATITUDE_CITY':
+        case "GET_INPUT_CITY_SAGA":
             return {
                 ...state,
-                latitudeCity: action.payload
-            };
-        case "GET_NEW_LONGITUDE_CITY":
-            return {
-                ...state,
-                longitudeCity: action.payload
-            };
-        case "GET_CURRENT_CITY_SAGA":
-            return {
-                ...state,
-                currentCity: action.payload
+                inputCity: action.payload
             };
         case "CLEAR_FORM_CITY":
             return {
                 ...state,
-                currentCity: ""
+                inputCity: ""
+            };
+        case "GET_NEW_LOCATION_SAGA":
+            return {
+                ...state,
+                newLocation: action.payload,
+                latitudeCity: action.payload.latitude,
+                longitudeCity: action.payload.longitudeCity
             };
 
         default:

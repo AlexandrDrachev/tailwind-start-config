@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 import { connect } from 'react-redux'
-import {autorisationSaga} from "../../actions/action";
+import { autorisationSaga } from "../../actions/action";
 
 const Header = (props) => {
 

@@ -1,37 +1,17 @@
 import { put, all, call, delay, take } from 'redux-saga/effects';
 
-import {
-    getLatitudeCity,
-    getLongitudeCity,
-    autorisationTest,
-} from "../actions/action";
+import { autorisationTest } from "../actions/action";
+import { getLatitudeCity, getLongitudeCity } from "../components/weathers/weather-actions";
 
-import { watchCurrentCity } from "../components/weathers/sagas/locations-saga";
+import {watchCurrentCity, watchNewLocation} from "../components/weathers/sagas/locations-saga";
+import { watchCoordsFunc } from "../components/weathers/sagas/locations-saga";
 
 export function* rootSagas() {
     yield all([
         watchCoordsFunc(),
         takeAutorisation(),
-        watchCurrentCity()
-    ]);
-}
-
-let lat;
-let lng;
-navigator.geolocation.getCurrentPosition((position) => {
-    lat = position.coords.latitude;
-    lng = position.coords.longitude;
-});
-
-
-function* watchCoordsFunc() {
-
-    if (!lat || !lng) {
-        yield delay(1000);
-    }
-    yield all([
-        yield put(getLatitudeCity(lat)),
-        yield put(getLongitudeCity(lng))
+        watchCurrentCity(),
+        watchNewLocation()
     ]);
 }
 
