@@ -1,5 +1,5 @@
 import { call, delay, put, take, all, fork } from "redux-saga/effects";
-import { getInputCitySaga, getLatitudeCity, getLongitudeCity, getNewLocationSaga } from "../weather-actions";
+import { getInputCitySaga, getLatitudeCity, getLongitudeCity, getNewLocationSaga, getNewWeatherTodaySaga } from "../weather-actions";
 import ServiceApi from "../../../services/service-api";
 
 let latAndLng = {
@@ -13,7 +13,7 @@ navigator.geolocation.getCurrentPosition((position) => {
 });
 
 const serviceApi = new ServiceApi();
-const { getCityCoords, getCityFromCoords } = serviceApi;
+const { getCityCoords, getCityFromCoords, getWeatherCityFromCoords } = serviceApi;
 
 
 export function* watchCoordsFunc() {
@@ -59,4 +59,17 @@ function* workerGetNewCity(city) {
     //     yield put(getLatitudeCity(res.latitude)),
     //     yield put(getLongitudeCity(res.longitude))
     // ]);
+}
+
+export function* watchWeatherToday() {
+    while (true) {
+        const { payload } = yield take("GET_NEW_WEATHER_TODAY");
+        console.log('payload: ', payload);
+        yield call(workerWeatherToday, payload);
+    }
+}
+
+function* workerWeatherToday(payload) {
+    const newWeather = yield call(getWeatherCityFromCoords, payload);
+    yield put(getNewWeatherTodaySaga(newWeather));
 }

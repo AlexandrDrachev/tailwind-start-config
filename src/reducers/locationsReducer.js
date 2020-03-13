@@ -2,7 +2,8 @@ export const initialLocationsState = {
     latitudeCity: null,
     longitudeCity: null,
     inputCity: "",
-    newLocation: null
+    newLocation: null,
+    weatherToday: null
 };
 
 export const locationReducer = (state, action) => {
@@ -36,8 +37,11 @@ export const locationReducer = (state, action) => {
             return {
                 ...state,
                 newLocation: action.payload,
-                latitudeCity: action.payload.latitude,
-                longitudeCity: action.payload.longitudeCity
+            };
+        case "GET_NEW_WEATHER_TODAY_SAGA":
+            return {
+                ...state,
+                weatherToday: action.payload
             };
 
         default:

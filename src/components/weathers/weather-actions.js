@@ -39,3 +39,17 @@ export const getNewLocationSaga = (newCity) => {
         payload: newCity
     };
 };
+
+export const getNewWeatherToday = (city) => {
+    return {
+        type: "GET_NEW_WEATHER_TODAY",
+        payload: city
+    };
+};
+
+export const getNewWeatherTodaySaga = (weather) => {
+    return {
+        type: "GET_NEW_WEATHER_TODAY_SAGA",
+        payload: weather
+    };
+};
