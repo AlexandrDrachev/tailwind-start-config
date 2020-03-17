@@ -17,27 +17,30 @@ const MyGoogleMap = compose(
         const refs = {
             map: undefined,
         };
-
         return {
             onMapMounted: () => ref => {
                 refs.map = ref;
-                console.log(refs.map);
             },
             onZoomChanged: ({ onZoomChange }) => () => {
                 onZoomChange(refs.map.getZoom())
-            }
+            },
         }
     }),
     withScriptjs,
     withGoogleMap
 )(props => {
+
+    // const mapRef = React.useRef(null);
+    // console.log(mapRef.current);
+
     return (
         <GoogleMap
+            center={props.center}
             defaultCenter={props.center}
             zoom={props.zoom}
             ref={props.onMapMounted}
             onZoomChanged={props.onZoomChanged}
-        >{console.log(props.mapElement)}
+        >
             <Marker
                 position={{ lat: props.center.lat, lng: props.center.lng }}
             >
@@ -48,14 +51,10 @@ const MyGoogleMap = compose(
 
 export default class ReactGoogleMap extends Component {
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.lati !== this.props.lati && prevProps.longi !== this.props.longi) {
-            console.log('update coords', this.props.lati);
-            return this.renderMyGoogleMap();
+    render() {
+        if (!this.props.lati || !this.props.longi) {
+            return <Spinner />
         }
-    }
-
-    renderMyGoogleMap = () => {
         return (
             <div className="h-300 w-300 border-2 border-gray-900">
                 <MyGoogleMap
@@ -63,12 +62,5 @@ export default class ReactGoogleMap extends Component {
                     {...this.props}/>
             </div>
         );
-    };
-
-    render() {
-        if (!this.props.lati || !this.props.longi) {
-            return <Spinner />
-        }
-        return this.renderMyGoogleMap();
     };
 }

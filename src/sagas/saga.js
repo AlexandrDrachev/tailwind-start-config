@@ -1,7 +1,6 @@
-import { put, all, call, delay, take } from 'redux-saga/effects';
+import { put, all, call, take } from 'redux-saga/effects';
 
 import { autorisationTest } from "../actions/action";
-import { getLatitudeCity, getLongitudeCity } from "../components/weathers/weather-actions";
 
 import {watchCurrentCity, watchNewLocation, watchWeatherToday} from "../components/weathers/sagas/locations-saga";
 import { watchCoordsFunc } from "../components/weathers/sagas/locations-saga";

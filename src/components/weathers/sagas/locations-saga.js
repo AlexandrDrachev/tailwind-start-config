@@ -1,5 +1,5 @@
-import { call, delay, put, take, all, fork } from "redux-saga/effects";
-import { getInputCitySaga, getLatitudeCity, getLongitudeCity, getNewLocationSaga, getNewWeatherTodaySaga } from "../weather-actions";
+import { call, delay, put, take } from "redux-saga/effects";
+import { getInputCitySaga, getNewLocationSaga, getNewWeatherTodaySaga } from "../weather-actions";
 import ServiceApi from "../../../services/service-api";
 
 let latAndLng = {
@@ -21,10 +21,6 @@ export function* watchCoordsFunc() {
     if (!lat || !lng) {
         yield delay(1000);
     }
-    // yield all([
-    //     yield put(getLatitudeCity(lat)),
-    //     yield put(getLongitudeCity(lng))
-    // ]);
     const res = yield call(getCityFromCoords, latAndLng);
     yield put(getNewLocationSaga(res));
 }
@@ -38,7 +34,6 @@ export function* watchCurrentCity() {
 }
 
 function* handleInput(city) {
-    console.log(city);
     yield put(getInputCitySaga(city));
 }
 
@@ -46,25 +41,18 @@ function* handleInput(city) {
 export function* watchNewLocation() {
     while (true) {
         const { payload } = yield take("GET_NEW_LOCATION");
-        console.log('city from GET_NEW_LOCATION:', payload);
         yield call(workerGetNewCity, payload);
     }
 }
 
 function* workerGetNewCity(city) {
-    console.log('city from saga:', city);
     const res = yield call(getCityCoords, city);
     yield put(getNewLocationSaga(res));
-    // yield all([
-    //     yield put(getLatitudeCity(res.latitude)),
-    //     yield put(getLongitudeCity(res.longitude))
-    // ]);
 }
 
 export function* watchWeatherToday() {
     while (true) {
         const { payload } = yield take("GET_NEW_WEATHER_TODAY");
-        console.log('payload: ', payload);
         yield call(workerWeatherToday, payload);
     }
 }

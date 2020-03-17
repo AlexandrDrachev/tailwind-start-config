@@ -53,8 +53,6 @@ const App = ({ serviceApi }) => {
         "backgroundImage": `url(${viewBckgImage()})`
     };
 
-    console.log(viewBckgImage());
-
     return (
         <div
             className="flex flex-col items-center h-screen mb:h-full bg-cover bg-center"

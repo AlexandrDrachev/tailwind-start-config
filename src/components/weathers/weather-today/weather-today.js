@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import GoogleApiWrapper from '../../google-api/google-api';
 import ReactGoogleMap from "../../reactGoogleMap";
 import { clearFormCity } from "../../../actions/action";
 import { getInputCity, getNewLocation, getNewWeatherToday } from "../weather-actions";
@@ -21,7 +20,6 @@ class WeatherToday extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.newLocation !== prevProps.newLocation) {
-            console.log('update');
             this.props.getNewWeatherToday(this.props.newLocation);
         }
     };
@@ -38,8 +36,6 @@ class WeatherToday extends Component {
     };
 
     renderSkyImg = () => {
-        console.log('newLocation: ', this.props.newLocation);
-        console.log('weatherToday: ', this.props.weatherToday);
         return (
             <div className="w-16 h-16 mr-6">
                 { this.props.weatherToday.sky < 50 ? <img alt="" src={sun} className="w-16 h-16"/> : null }
@@ -92,7 +88,6 @@ class WeatherToday extends Component {
                     </div> : <Spinner />}
                 </div>
                 <div className="h-full flex flex-col items-center justify-center mb:order-2 mx-5">
-                    {/*{newLocation ? <GoogleApiWrapper lati={newLocation.latitude} longi={newLocation.longitude} newLocation={newLocation} /> : <Spinner /> }*/}
                     {newLocation ? <ReactGoogleMap lati={newLocation.latitude} longi={newLocation.longitude} newLocation={newLocation} /> : <Spinner /> }
                     <button className="bg-green-500 w-full text-2xl text-white font-bold py-3 rounded hover:bg-green-600">
                         week weather forecast
