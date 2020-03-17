@@ -5,8 +5,12 @@ import { withService } from "../hoc";
 import Autorisation from "../autorisation";
 import WeatherToday from "../weathers/weather-today";
 import WeatherWeek from "../weathers/weather-week";
+import ServiceApi from "../../services/service-api";
 
 const App = ({ serviceApi }) => {
+
+    const api = new ServiceApi();
+    api.getWeatherForcast(47.85, 35.13);
 
     let bckg = "bg-indigo-700";
     let day = true;

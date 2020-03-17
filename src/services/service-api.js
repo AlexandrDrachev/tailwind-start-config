@@ -11,6 +11,7 @@ export default class ServiceApi {
     initialCityBase = 'http://www.mapquestapi.com/geocoding/v1/reverse?key=1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v' +
         '&location=50.449988,30.523494&i';
     weatherApiCoordsCity = 'api.openweathermap.org/data/2.5/weather?lat=50.449988&lon=30.523494&appid=5e25a2aa044e3b9adfed00a116b25a27';
+    weatherForcast = 'api.openweathermap.org/data/2.5/forecast?lat=50.449988&lon=30.523494&appid=5e25a2aa044e3b9adfed00a116b25a27';
 
     //Kyiv:
     // lati:  50.449988
@@ -62,6 +63,21 @@ export default class ServiceApi {
                     wind: `${res.wind.speed} m/s`,
                     sky: res.clouds.all
                 };
+            });
+    };
+
+    getWeatherForcast = async (latitude, longitude) => {
+        // const { latitude, longitude } = coords;
+        let res = await fetch(`api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=5e25a2aa044e3b9adfed00a116b25a27`);
+        if (!res.ok) {
+            throw new Error(`Could not fetch, received ${res.status}`);
+        }
+        return await res.json()
+            .then(res => {
+                console.log(res);
+                res.list.filter((oneDay) => {
+                    return console.log(oneDay.weather[0].description.includes("light rain"));
+                });
             });
     };
 }

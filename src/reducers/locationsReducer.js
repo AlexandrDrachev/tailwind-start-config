@@ -12,17 +12,6 @@ export const locationReducer = (state, action) => {
     }
     console.log('action: ', action);
     switch (action.type) {
-        case "GET_LATITUDE_CITY":
-            return {
-                ...state,
-                latitudeCity: action.payload
-            };
-
-        case "GET_LONGITUDE_CITY":
-            return {
-                ...state,
-                longitudeCity: action.payload
-            };
         case "GET_INPUT_CITY_SAGA":
             return {
                 ...state,

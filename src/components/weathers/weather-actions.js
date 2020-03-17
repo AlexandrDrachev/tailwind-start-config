@@ -1,16 +1,4 @@
-export const getLatitudeCity = (lat) => {
-    return {
-        type: "GET_LATITUDE_CITY",
-        payload: lat
-    };
-};
 
-export const getLongitudeCity = (lng) => {
-    return {
-        type: "GET_LONGITUDE_CITY",
-        payload: lng
-    };
-};
 
 export const getInputCity = (city) => {
     return {

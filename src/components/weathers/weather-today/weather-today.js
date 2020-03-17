@@ -36,6 +36,7 @@ class WeatherToday extends Component {
     };
 
     renderSkyImg = () => {
+
         return (
             <div className="w-16 h-16 mr-6">
                 { this.props.weatherToday.sky < 50 ? <img alt="" src={sun} className="w-16 h-16"/> : null }
