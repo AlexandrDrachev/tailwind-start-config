@@ -2,7 +2,12 @@ import { put, all, call, take } from 'redux-saga/effects';
 
 import { autorisationTest } from "../actions/action";
 
-import {watchCurrentCity, watchNewLocation, watchWeatherToday} from "../components/weathers/sagas/locations-saga";
+import {
+    watchCurrentCity,
+    watchNewLocation,
+    watchWeatherForcast,
+    watchWeatherToday
+} from "../components/weathers/sagas/locations-saga";
 import { watchCoordsFunc } from "../components/weathers/sagas/locations-saga";
 
 export function* rootSagas() {
@@ -11,7 +16,8 @@ export function* rootSagas() {
         takeAutorisation(),
         watchCurrentCity(),
         watchNewLocation(),
-        watchWeatherToday()
+        watchWeatherToday(),
+        watchWeatherForcast()
     ]);
 }
 

@@ -19,7 +19,6 @@ export default class ServiceApi {
 
     getCityCoords = async (city) => {
         const res = await fetch(`${this.mapquestCityBase}${city}`);
-        console.log(`${this.mapquestCityBase}${city}`);
         if (!res.ok) {
             throw new Error(`Could not fetch ${city}, received ${res.status}`);
         }
@@ -61,24 +60,55 @@ export default class ServiceApi {
                     tempMin: res.main.temp_min,
                     tempMax: res.main.temp_max,
                     wind: `${res.wind.speed} m/s`,
-                    sky: res.clouds.all
+                    sky: res.clouds.all,
+                    description: res.weather[0].description
                 };
             });
     };
 
-    getWeatherForcast = async (latitude, longitude) => {
-        // const { latitude, longitude } = coords;
-        let res = await fetch(`api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=5e25a2aa044e3b9adfed00a116b25a27`);
+    getWeatherForcast = async (coords) => {
+        const { latitude, longitude } = coords;
+        let res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=5e25a2aa044e3b9adfed00a116b25a27`);
         if (!res.ok) {
             throw new Error(`Could not fetch, received ${res.status}`);
         }
         return await res.json()
-            .then(res => {
-                console.log(res);
-                res.list.filter((oneDay) => {
-                    return console.log(oneDay.weather[0].description.includes("light rain"));
+            .then((res) => {
+                return res.list.map((weather) => {
+                    return {
+                        id: weather.dt,
+                        temp: (weather.main.temp - 273).toFixed(1),
+                        tempMin: (weather.main.temp_min - 273).toFixed(1),
+                        tempMax: (weather.main.temp_max - 273).toFixed(1),
+                        description: weather.weather[0].description,
+                        clouds: weather.clouds.all,
+                        wind: weather.wind.speed,
+                        date: weather.dt_txt
+                    };
                 });
             });
+    };
+
+    getDayFromForcast = (day) => {
+        const currentDay = new Date(day).getDay();
+        switch (currentDay) {
+            case 0:
+                return "Sunday";
+            case 1:
+                return "Monday";
+            case 2:
+                return "Tuesday";
+            case 3:
+                return "Wednesday";
+            case 4:
+                return "Thursday";
+            case 5:
+                return "Friday";
+            case 6:
+                return "Saturday";
+            default:
+                return true;
+        }
     };
 }
 

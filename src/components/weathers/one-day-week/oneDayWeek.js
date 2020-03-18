@@ -1,9 +1,9 @@
 import React from 'react';
 
-import overcast from '../../../images/overcast.svg';
-import overcastSnow from '../../../images/overcast-snow.svg';
+import overcastDay from '../../../images/overcastDay.svg';
+import overcastNight from '../../../images/overcastNight.svg';
 
-const OneDayWeek = () => {
+const OneDayWeek = ({ date, day, tempMax, tempMin }) => {
 
     return (
         <div className="flex flex-col justify-between bg-blue-100 p-2 m-2 rounded border-2 border-gray-700">
@@ -12,21 +12,20 @@ const OneDayWeek = () => {
                     <img
                         className="w-full h-full"
                         alt=""
-                        src={overcast} />
+                        src={overcastDay} />
                 </div>
                 <div className="w-10 h-10 m-2">
                     <img
                         className="w-full h-full"
                         alt=""
-                        src={overcastSnow} />
+                        src={overcastNight} />
                 </div>
             </div>
             <div className="flex flex-col items-start justify-center">
-                <span>day: .......</span>
-                <span>date: .......</span>
-                <span>temp min: .....</span>
-                <span>temp max: .....</span>
-                <span>snow/rain: </span>
+                <span>day: {day}</span>
+                <span>date: {date}</span>
+                <span>temp min: {tempMin}</span>
+                <span>temp max: {tempMax}</span>
             </div>
         </div>
     );

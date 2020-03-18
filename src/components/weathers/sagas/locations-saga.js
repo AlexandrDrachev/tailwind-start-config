@@ -1,5 +1,5 @@
 import { call, delay, put, take } from "redux-saga/effects";
-import { getInputCitySaga, getNewLocationSaga, getNewWeatherTodaySaga } from "../weather-actions";
+import {getInputCitySaga, getNewLocationSaga, getNewWeatherTodaySaga, getWeatherForcastSaga} from "../weather-actions";
 import ServiceApi from "../../../services/service-api";
 
 let latAndLng = {
@@ -13,7 +13,7 @@ navigator.geolocation.getCurrentPosition((position) => {
 });
 
 const serviceApi = new ServiceApi();
-const { getCityCoords, getCityFromCoords, getWeatherCityFromCoords } = serviceApi;
+const { getCityCoords, getCityFromCoords, getWeatherCityFromCoords, getWeatherForcast } = serviceApi;
 
 
 export function* watchCoordsFunc() {
@@ -50,6 +50,7 @@ function* workerGetNewCity(city) {
     yield put(getNewLocationSaga(res));
 }
 
+//get weathers
 export function* watchWeatherToday() {
     while (true) {
         const { payload } = yield take("GET_NEW_WEATHER_TODAY");
@@ -60,4 +61,19 @@ export function* watchWeatherToday() {
 function* workerWeatherToday(payload) {
     const newWeather = yield call(getWeatherCityFromCoords, payload);
     yield put(getNewWeatherTodaySaga(newWeather));
+}
+
+export function* watchWeatherForcast() {
+    while (true) {
+        const { payload } = yield take("GET_WEATHER_FORCAST_ACTION");
+        const weatherArr = yield call(getWeatherForcast, payload);
+        yield call(workerWeatherForcast, weatherArr);
+    }
+}
+
+function* workerWeatherForcast(weatherArr) {
+    const filterWeatherForcast = weatherArr.filter((weather) => {
+         return new Date(weather.date).getHours() === 15;
+    });
+    yield put(getWeatherForcastSaga(filterWeatherForcast));
 }

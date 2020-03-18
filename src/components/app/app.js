@@ -5,18 +5,19 @@ import { withService } from "../hoc";
 import Autorisation from "../autorisation";
 import WeatherToday from "../weathers/weather-today";
 import WeatherWeek from "../weathers/weather-week";
-import ServiceApi from "../../services/service-api";
 
 const App = ({ serviceApi }) => {
 
-    const api = new ServiceApi();
-    api.getWeatherForcast(47.85, 35.13);
+    const { getDayFromForcast } = serviceApi;
+    console.log(getDayFromForcast("2020-03-16"));
+    console.log(getDayFromForcast(new Date()));
+    console.log(new Date().toLocaleDateString());
 
     let bckg = "bg-indigo-700";
     let day = true;
     let night = false;
     let snow = false;
-    let rain = true;
+    let rain = false;
     let summer = false;
     let autumn = true;
     let winter = false;
@@ -59,7 +60,7 @@ const App = ({ serviceApi }) => {
 
     return (
         <div
-            className="flex flex-col items-center h-screen mb:h-full bg-cover bg-center"
+            className="flex flex-col items-center h-screen mb:h-full w-screen bg-cover bg-center overflow-auto"
             style={styles}>
             <Header />
             <Autorisation />

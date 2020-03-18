@@ -41,3 +41,17 @@ export const getNewWeatherTodaySaga = (weather) => {
         payload: weather
     };
 };
+
+export const getWeatherForcastAction = (weatherArr) => {
+    return {
+        type: "GET_WEATHER_FORCAST_ACTION",
+        payload: weatherArr
+    };
+};
+
+export const getWeatherForcastSaga = (forcastArr) => {
+    return {
+        type: "GET_WEATHER_FORCAST_SAGA",
+        payload: forcastArr
+    };
+};
