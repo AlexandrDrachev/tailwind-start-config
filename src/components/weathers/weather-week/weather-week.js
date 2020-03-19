@@ -1,44 +1,66 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import OneDayWeek from "../one-day-week";
-import { getWeatherForcastAction } from "../weather-actions";
 import ServiceApi from "../../../services/service-api";
+import Spinner from "../../spinner";
+import { getUpdateWeatherForcastAction } from "../weather-actions";
 
-const WeatherWeek = ({ weatherForcast, getWeatherForcastAction }) => {
+class WeatherWeek extends Component {
 
-    const api = new ServiceApi();
-    const { getDayFromForcast } = api;
+    componentDidMount() {
+        if (!this.props.weatherForcast) {
+            return true;
+        }
+        this.renderOneDayWeather();
+    }
 
-    const renderOneDayWeather = () => {
-        return weatherForcast.map((weatherOneDay) => {
-            return (
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.newLocation !== prevProps.newLocation) {
+            console.log('******************', this.props.newLocation.cityName);
+            // this.props.getUpdateWeatherForcastAction(this.props.newLocation);
+        }
+    }
+
+    api = new ServiceApi();
+
+    renderOneDayWeather = () => {
+        return this.props.weatherForcast.map((weatherOneDay) => {
+            return weatherOneDay ? (
                 <OneDayWeek
+                    wind={weatherOneDay.wind}
+                    weatherOneDay={weatherOneDay}
+                    description={weatherOneDay.description}
                     tempMax={weatherOneDay.tempMax}
                     tempMin={weatherOneDay.tempMin}
                     date={new Date(weatherOneDay.date).toLocaleDateString()}
-                    day={getDayFromForcast(weatherOneDay.date)}
-                    key={weatherOneDay.id}
-                />
-            );
+                    day={this.api.getDayFromForcast(weatherOneDay.date)}
+                    key={weatherOneDay.id}/>
+            ) : <Spinner/>;
         });
     };
 
-    return (
-        <div className="flex justify-center mb:flex-wrap">
-            {weatherForcast ? renderOneDayWeather() : null}
-        </div>
-    );
-};
+    render() {
+        const { weatherForcast } = this.props;
+
+        return (
+            <div className="flex justify-center mb:flex-wrap">
+                {weatherForcast ? this.renderOneDayWeather() : null}
+            </div>
+        );
+    }
+}
 
 const mapStateToProps = (state) => {
     return {
-        weatherForcast: state.locationsState.weatherForcast
+        weatherForcast: state.locationsState.weatherForcast,
+        newLocation: state.locationsState.newLocation,
+        weatherToday: state.locationsState.weatherToday
     };
 };
 
 const mapDispatchToProps = {
-    getWeatherForcastAction: getWeatherForcastAction
+    getUpdateWeatherForcastAction: getUpdateWeatherForcastAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WeatherWeek);

@@ -1,5 +1,5 @@
-import { call, delay, put, take } from "redux-saga/effects";
-import {getInputCitySaga, getNewLocationSaga, getNewWeatherTodaySaga, getWeatherForcastSaga} from "../weather-actions";
+import { call, delay, put, take, select } from "redux-saga/effects";
+import { getInputCitySaga, getNewLocationSaga, getNewWeatherTodaySaga, getWeatherForcastSaga, getWeatherDetailsSaga } from "../weather-actions";
 import ServiceApi from "../../../services/service-api";
 
 let latAndLng = {
@@ -65,7 +65,7 @@ function* workerWeatherToday(payload) {
 
 export function* watchWeatherForcast() {
     while (true) {
-        const { payload } = yield take("GET_WEATHER_FORCAST_ACTION");
+        const { payload } = yield take(["GET_WEATHER_FORCAST_ACTION"]);
         const weatherArr = yield call(getWeatherForcast, payload);
         yield call(workerWeatherForcast, weatherArr);
     }
@@ -77,3 +77,34 @@ function* workerWeatherForcast(weatherArr) {
     });
     yield put(getWeatherForcastSaga(filterWeatherForcast));
 }
+
+export function* watchUpdateWeatherForcast() {
+    const payload = yield take("GET_UPDATE_WEATHER_FORCAST_ACTION");
+    const weatherArr = yield call(getWeatherForcast, payload);
+    yield call(workerWeatherForcast, weatherArr);
+}
+
+//get weather details for initialisation bckg-image app
+
+export function* watchWeatherDetails() {
+    while (true) {
+        yield take("GET_WEATHER_DETAILS");
+        yield call(workerWeatherDetails);
+    }
+}
+
+function* workerWeatherDetails() {
+    const state  = yield select();
+    const { locationsState: { weatherDetails, weatherToday } } = state;
+    const newWeatherDetails = JSON.parse(JSON.stringify(weatherDetails));
+    newWeatherDetails.day = (new Date().getHours() >= 6 && new Date().getHours()) < 18;
+    newWeatherDetails.night = (new Date().getHours() < 6 || new Date().getHours()) >= 18;
+    newWeatherDetails.snow = weatherToday ? (weatherToday.description  === 'snow' || weatherToday.description === 'light snow') : null;
+    newWeatherDetails.rain = weatherToday ? (weatherToday.description  === 'rain' || weatherToday.description === 'light rain') : null;
+    newWeatherDetails.summer = (new Date().getMonth() >= 5 && new Date().getMonth() <= 7);
+    newWeatherDetails.autumn = (new Date().getMonth() >= 8 && new Date().getMonth() <= 10);
+    newWeatherDetails.winter = (new Date().getMonth() === 11 || new Date().getMonth() <= 0 || new Date().getMonth() === 1);
+    newWeatherDetails.spring = (new Date().getMonth() >= 2 && new Date().getMonth() <= 4);
+    yield put(getWeatherDetailsSaga(newWeatherDetails));
+}
+

@@ -21,6 +21,34 @@ import rainyNight from "../../../images/rainyNight.svg";
 import snowDay from "../../../images/snowDay.svg";
 import snowNight from "../../../images/snowNight.svg";
 
+export const renderSkyImgDay = (weatherToday) => {
+
+    return (
+        <div className="w-6 h-6">
+            { weatherToday.description === 'clear sky' ? <img alt="" src={clearSkyDay} className="w-6 h-6"/> : null }
+            { weatherToday.description === 'rain' || weatherToday.description === 'light rain' ? <img alt="" src={rainyDay} className="w-6 h-6"/> : null }
+            { weatherToday.description === 'snow' || weatherToday.description === 'light snow' ? <img alt="" src={snowDay} className="w-6 h-6"/> : null }
+            { weatherToday.description === 'overcast clouds' ||
+            weatherToday.description === 'broken clouds' ||
+            weatherToday.description === 'few clouds'? <img alt="" src={overcastDay} className="w-6 h-6"/> : null }
+        </div>
+    );
+};
+
+export const renderSkyImgNight = (weatherToday) => {
+
+    return (
+        <div className="w-6 h-6">
+            { weatherToday.description === 'clear sky' ? <img alt="" src={clearSkyNight} className="w-6 h-6"/> : null }
+            { weatherToday.description === 'rain' || weatherToday.description === 'light rain' ? <img alt="" src={rainyNight} className="w-6 h-6"/> : null }
+            { weatherToday.description === 'snow' || weatherToday.description === 'light snow' ? <img alt="" src={snowNight} className="w-6 h-6"/> : null }
+            { weatherToday.description === 'overcast clouds' ||
+            weatherToday.description === 'broken clouds' ||
+            weatherToday.description === 'few clouds' ? <img alt="" src={overcastNight} className="w-6 h-6"/> : null }
+        </div>
+    );
+};
+
 class WeatherToday extends Component {
 
     componentDidMount() {
@@ -39,6 +67,7 @@ class WeatherToday extends Component {
         e.preventDefault();
         this.props.getNewLocation(this.props.inputCity);
         this.props.getNewWeatherToday(this.props.newLocation);
+        // this.props.getWeatherForcastAction(this.props.newLocation);
         this.props.clearCity();
     };
 
@@ -46,40 +75,10 @@ class WeatherToday extends Component {
         return this.props.getCity(e.target.value);
     };
 
-    renderSkyImgDay = () => {
-        const { weatherToday } = this.props;
-        return (
-            <div className="w-6 h-6 mr-6">
-                { weatherToday.description === 'clear sky' ? <img alt="" src={clearSkyDay} className="w-6 h-6"/> : null }
-                { weatherToday.description === 'rain' || weatherToday.description === 'light rain' ? <img alt="" src={rainyDay} className="w-6 h-6"/> : null }
-                { weatherToday.description === 'snow' || weatherToday.description === 'light snow' ? <img alt="" src={snowDay} className="w-6 h-6"/> : null }
-                { weatherToday.description === 'overcast clouds' ||
-                  weatherToday.description === 'broken clouds' ||
-                  weatherToday.description === 'few clouds'? <img alt="" src={overcastDay} className="w-6 h-6"/> : null }
-            </div>
-        );
-    };
-
-    renderSkyImgNight = () => {
-        const { weatherToday } = this.props;
-        return (
-            <div className="w-6 h-6 mr-6">
-                { weatherToday.description === 'clear sky' ? <img alt="" src={clearSkyNight} className="w-6 h-6"/> : null }
-                { weatherToday.description === 'rain' || weatherToday.description === 'light rain' ? <img alt="" src={rainyNight} className="w-6 h-6"/> : null }
-                { weatherToday.description === 'snow' || weatherToday.description === 'light snow' ? <img alt="" src={snowNight} className="w-6 h-6"/> : null }
-                { weatherToday.description === 'overcast clouds' ||
-                  weatherToday.description === 'broken clouds' ||
-                  weatherToday.description === 'few clouds' ? <img alt="" src={overcastNight} className="w-6 h-6"/> : null }
-            </div>
-        );
-    };
-
     render() {
 
-        const { inputCity, newLocation, weatherToday, weatherForcast } = this.props;
+        const { inputCity, newLocation, weatherToday } = this.props;
         const api = new ServiceApi();
-        console.log(weatherToday);
-        console.log(weatherForcast);
 
         if (!this.props.newLocation) {
             return <Spinner/>
@@ -121,13 +120,13 @@ class WeatherToday extends Component {
                             <div className="flex justify-around">
                                 <span className="ml-4">{+weatherToday.sky}%</span>
                                 <span className="mx-2 font-bold">{weatherToday.description}</span>
-                                {new Date().getHours() >= 6 && new Date().getHours() < 18 ? this.renderSkyImgDay() : this.renderSkyImgNight()}
+                                {new Date().getHours() >= 6 && new Date().getHours() < 18 ? renderSkyImgDay(weatherToday) : renderSkyImgNight(weatherToday)}
                             </div>
                         </div>
                     </div>
-                        <span className="ml-2 font-bold">temp: {(+weatherToday.temp - 273).toFixed(1)}</span>
-                        <span className="ml-2 font-bold">temp-min: {(+weatherToday.tempMin -273).toFixed(1)}</span>
-                        <span className="ml-2 font-bold">temp-max: {(+weatherToday.tempMax -273).toFixed(1)}</span>
+                        <span className="ml-2 font-bold">temp: {(+weatherToday.temp - 273).toFixed(1)}&#176;</span>
+                        <span className="ml-2 font-bold">temp-min: {(+weatherToday.tempMin -273).toFixed(1)}&#176;</span>
+                        <span className="ml-2 font-bold">temp-max: {(+weatherToday.tempMax -273).toFixed(1)}&#176;</span>
                         <span className="ml-2 font-bold">wind: {weatherToday.wind}</span>
                     </div> : <Spinner />}
                 </div>

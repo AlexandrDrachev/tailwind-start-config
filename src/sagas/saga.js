@@ -6,7 +6,9 @@ import {
     watchCurrentCity,
     watchNewLocation,
     watchWeatherForcast,
-    watchWeatherToday
+    watchWeatherToday,
+    watchWeatherDetails,
+    watchUpdateWeatherForcast
 } from "../components/weathers/sagas/locations-saga";
 import { watchCoordsFunc } from "../components/weathers/sagas/locations-saga";
 
@@ -17,7 +19,9 @@ export function* rootSagas() {
         watchCurrentCity(),
         watchNewLocation(),
         watchWeatherToday(),
-        watchWeatherForcast()
+        watchWeatherForcast(),
+        watchWeatherDetails(),
+        watchUpdateWeatherForcast()
     ]);
 }
 

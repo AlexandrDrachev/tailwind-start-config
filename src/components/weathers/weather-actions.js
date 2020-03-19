@@ -42,10 +42,10 @@ export const getNewWeatherTodaySaga = (weather) => {
     };
 };
 
-export const getWeatherForcastAction = (weatherArr) => {
+export const getWeatherForcastAction = (weatherObj) => {
     return {
         type: "GET_WEATHER_FORCAST_ACTION",
-        payload: weatherArr
+        payload: weatherObj
     };
 };
 
@@ -53,5 +53,25 @@ export const getWeatherForcastSaga = (forcastArr) => {
     return {
         type: "GET_WEATHER_FORCAST_SAGA",
         payload: forcastArr
+    };
+};
+
+export const getWeatherDetails = () => {
+    return {
+        type: "GET_WEATHER_DETAILS"
+    };
+};
+
+export const getWeatherDetailsSaga = (newDetails) => {
+    return {
+        type: "GET_WEATHER_DETAILS_SAGA",
+        payload: newDetails
+    };
+};
+
+export const getUpdateWeatherForcastAction = (weatherObj) => {
+    return {
+        type: "GET_UPDATE_WEATHER_FORCAST_ACTION",
+        payload: weatherObj
     };
 };

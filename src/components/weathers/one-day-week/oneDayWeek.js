@@ -1,31 +1,25 @@
 import React from 'react';
 
-import overcastDay from '../../../images/overcastDay.svg';
-import overcastNight from '../../../images/overcastNight.svg';
+import { renderSkyImgDay, renderSkyImgNight } from "../weather-today/weather-today";
 
-const OneDayWeek = ({ date, day, tempMax, tempMin }) => {
+const OneDayWeek = ({ date, day, tempMax, tempMin, weatherOneDay, description, wind }) => {
 
     return (
-        <div className="flex flex-col justify-between bg-blue-100 p-2 m-2 rounded border-2 border-gray-700">
-            <div className="flex items-center justify-center">
-                <div className="w-10 h-10 m-2">
-                    <img
-                        className="w-full h-full"
-                        alt=""
-                        src={overcastDay} />
+        <div className="flex flex-col justify-center bg-blue-100 p-2 m-2 rounded border-2 border-gray-700">
+            <div className="flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center w-full">
+                    <span>{date}</span>
+                    <span className="font-bold">{day}</span>
                 </div>
-                <div className="w-10 h-10 m-2">
-                    <img
-                        className="w-full h-full"
-                        alt=""
-                        src={overcastNight} />
+                <span>temp min: {tempMin}&#176;</span>
+                <span>temp max: {tempMax}&#176;</span>
+                <div className="flex items-center justify-center w-full">
+                    <span className="mx-2">{description}</span>
+                    {new Date().getHours() >= 6 && new Date().getHours() < 18 ? renderSkyImgDay(weatherOneDay) : renderSkyImgNight(weatherOneDay)}
                 </div>
-            </div>
-            <div className="flex flex-col items-start justify-center">
-                <span>day: {day}</span>
-                <span>date: {date}</span>
-                <span>temp min: {tempMin}</span>
-                <span>temp max: {tempMax}</span>
+                <div className="w-full flex justify-center">
+                    wind:<span>{wind}m/s</span>
+                </div>
             </div>
         </div>
     );
