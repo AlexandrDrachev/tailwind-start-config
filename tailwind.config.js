@@ -5,6 +5,7 @@ module.exports = {
         "200": "200px",
         "300": "300px",
         "320": "320px",
+        "350": "350px",
         "400": "400px",
         "500": "500px",
       },
@@ -24,7 +25,7 @@ module.exports = {
       },
     },
     screens: {
-      'mb': {'min': '370px', 'max': '639px'},
+      'mb': {'min': '300px', 'max': '639px'},
       'sm': {'min': '640px', 'max': '767px'},
       'md': {'min': '768px', 'max': '1023px'},
       'lg': {'min': '1024px', 'max': '1279px'},

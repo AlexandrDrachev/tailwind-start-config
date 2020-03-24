@@ -11,6 +11,7 @@ import {
     watchUpdateWeatherForcast
 } from "../components/weathers/sagas/locations-saga";
 import { watchCoordsFunc } from "../components/weathers/sagas/locations-saga";
+import { watchGetAutorisation, watchGetRegistration, watchAutorisationQuest } from "../components/autorisation/autorisation-saga";
 
 export function* rootSagas() {
     yield all([
@@ -21,7 +22,10 @@ export function* rootSagas() {
         watchWeatherToday(),
         watchWeatherForcast(),
         watchWeatherDetails(),
-        watchUpdateWeatherForcast()
+        watchUpdateWeatherForcast(),
+        watchGetAutorisation(),
+        watchGetRegistration(),
+        watchAutorisationQuest()
     ]);
 }
 

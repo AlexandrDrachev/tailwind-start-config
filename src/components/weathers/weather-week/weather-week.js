@@ -4,30 +4,34 @@ import { connect } from 'react-redux';
 import OneDayWeek from "../one-day-week";
 import ServiceApi from "../../../services/service-api";
 import Spinner from "../../spinner";
-import { getUpdateWeatherForcastAction } from "../weather-actions";
+import { getUpdateWeatherForcastAction, getWeatherForcastAction } from "../weather-actions";
 
 class WeatherWeek extends Component {
 
     componentDidMount() {
-        if (!this.props.weatherForcast) {
-            return true;
+        if (!this.props.newLocation) {
+            return;
         }
-        this.renderOneDayWeather();
+        console.log(111111111111);
+        return this.renderForcastWeather();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.newLocation !== prevProps.newLocation) {
             console.log('******************', this.props.newLocation.cityName);
             // this.props.getUpdateWeatherForcastAction(this.props.newLocation);
+            this.props.getWeatherForcastAction(this.props.newLocation);
+            // this.renderOneDayWeather();
         }
     }
 
     api = new ServiceApi();
 
-    renderOneDayWeather = () => {
+    renderForcastWeather = () => {
         return this.props.weatherForcast.map((weatherOneDay) => {
             return weatherOneDay ? (
                 <OneDayWeek
+                    newLocation={this.props.newLocation}
                     wind={weatherOneDay.wind}
                     weatherOneDay={weatherOneDay}
                     description={weatherOneDay.description}
@@ -44,8 +48,8 @@ class WeatherWeek extends Component {
         const { weatherForcast } = this.props;
 
         return (
-            <div className="flex justify-center mb:flex-wrap">
-                {weatherForcast ? this.renderOneDayWeather() : null}
+            <div className="flex-col items-center justify-center flex-wrap">
+                { weatherForcast ? this.renderForcastWeather() : null }
             </div>
         );
     }
@@ -60,7 +64,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    getUpdateWeatherForcastAction: getUpdateWeatherForcastAction
+    getUpdateWeatherForcastAction: getUpdateWeatherForcastAction,
+    getWeatherForcastAction: getWeatherForcastAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WeatherWeek);

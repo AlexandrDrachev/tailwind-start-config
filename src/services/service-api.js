@@ -7,7 +7,7 @@ export default class ServiceApi {
     mapquestApiUrl = 'http://www.mapquestapi.com/geocoding/v1/address?' +
         'key=1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v&location=%D0%B7%D0%B0%D0%BF%D0%BE%D1%80%D0%BE%D0%B6%D1%8C%D0%B5';
     baseUrl = 'api.openweathermap.org/data/2.5/weather?';
-    mapquestCityBase = 'http://www.mapquestapi.com/geocoding/v1/address?key=1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v&location=';
+    mapquestCityBase = 'https://www.mapquestapi.com/geocoding/v1/address?key=1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v&location=';
     initialCityBase = 'http://www.mapquestapi.com/geocoding/v1/reverse?key=1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v' +
         '&location=50.449988,30.523494&i';
     weatherApiCoordsCity = 'api.openweathermap.org/data/2.5/weather?lat=50.449988&lon=30.523494&appid=5e25a2aa044e3b9adfed00a116b25a27';

@@ -3,26 +3,30 @@ import { Link } from "react-router-dom";
 
 import { connect } from 'react-redux'
 import { autorisationSaga } from "../../actions/action";
+import { userExit } from "../autorisation/autorisation-actions";
 
 const Header = (props) => {
 
-    const { users, autorisationSaga } = props;
+    const { userActive, autorisationSaga, userExit } = props;
 
     return (
         <div
             className="flex justify-between items-center border bg-blue-500 w-11/12 my-5 min-h-100 rounded-md p-2 text-white font-bold mb:flex-wrap">
             <h2 className="mb:order-1">Header</h2>
             <ul className="flex justify-center mb:order-3 mb:w-full">
-                <Link to="/"><li>home</li></Link>
-                <Link to="/history"><li className="mx-10">history</li></Link>
-                <Link to="/statistic"><li>statistic</li></Link>
+                {/*<Link to="/home"><li>home</li></Link>*/}
+                {/*<Link to="/forcast"><li className="mx-10">forcast</li></Link>*/}
             </ul>
             <div className="mb:order-2">
-                <span
-                    className="cursor-pointer"
-                    onClick={() => autorisationSaga()}>
-                    {users[0].userName}
-                </span>
+                {userActive ?
+                    <div className="flex flex-col items-end">
+                        <span onClick={() => userExit()} className="font-bold text-red-600 cursor-pointer">exit</span>
+                        <span
+                            className="cursor-pointer"
+                            onClick={() => autorisationSaga()}>
+                            {userActive.userName}
+                        </span>
+                    </div> : null}
                 <img alt="" src="#"/>
             </div>
         </div>
@@ -31,12 +35,13 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.autorisationState.users
+        userActive: state.autorisationState.userActive
     }
 };
 
 const mapDispatchToProps = {
-    autorisationSaga: autorisationSaga
+    autorisationSaga: autorisationSaga,
+    userExit: userExit
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

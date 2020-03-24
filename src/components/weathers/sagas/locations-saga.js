@@ -1,4 +1,4 @@
-import { call, delay, put, take, select } from "redux-saga/effects";
+import { call, delay, put, take, select, fork } from "redux-saga/effects";
 import { getInputCitySaga, getNewLocationSaga, getNewWeatherTodaySaga, getWeatherForcastSaga, getWeatherDetailsSaga } from "../weather-actions";
 import ServiceApi from "../../../services/service-api";
 

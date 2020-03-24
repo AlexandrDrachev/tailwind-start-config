@@ -7,5 +7,25 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBQYSlwgq6pm5SJ63va5A48LXuk4UO0E-k",
+            authDomain: "weather-app-4a006.firebaseapp.com",
+            databaseURL: "https://weather-app-4a006.firebaseio.com",
+            projectId: "weather-app-4a006",
+            storageBucket: "weather-app-4a006.appspot.com",
+            messagingSenderId: "440468792217",
+            appId: "1:440468792217:web:0f6e08b8c4bef658b6a908"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
   </body>
 </html>
