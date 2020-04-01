@@ -9,7 +9,7 @@ const MyGoogleMap = compose(
     withProps({
         googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=3.exp&libraries=geometry,drawing,places`,
         loadingElement: <div style={{ height: `100%` }} />,
-        containerElement: <div style={{ height: `290px` }} />,
+        containerElement: <div style={{ height: `300px` }} />,
         mapElement: <div style={{ height: `100%` }} />,
     }),
     withState('zoom', 'onZoomChange', 8),
@@ -29,9 +29,6 @@ const MyGoogleMap = compose(
     withScriptjs,
     withGoogleMap
 )(props => {
-
-    // const mapRef = React.useRef(null);
-    // console.log(mapRef.current);
 
     return (
         <GoogleMap
@@ -56,7 +53,7 @@ export default class ReactGoogleMap extends Component {
             return <Spinner />
         }
         return (
-            <div className="h-300 w-300 border-2 border-gray-900">
+            <div className="h-300 w-300 border border-white rounded">
                 <MyGoogleMap
                     center ={ { lat: this.props.lati, lng: this.props.longi } }
                     {...this.props}/>

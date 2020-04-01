@@ -12,16 +12,12 @@ class WeatherWeek extends Component {
         if (!this.props.newLocation) {
             return;
         }
-        console.log(111111111111);
         return this.renderForcastWeather();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.newLocation !== prevProps.newLocation) {
-            console.log('******************', this.props.newLocation.cityName);
-            // this.props.getUpdateWeatherForcastAction(this.props.newLocation);
             this.props.getWeatherForcastAction(this.props.newLocation);
-            // this.renderOneDayWeather();
         }
     }
 
@@ -48,7 +44,7 @@ class WeatherWeek extends Component {
         const { weatherForcast } = this.props;
 
         return (
-            <div className="flex-col items-center justify-center flex-wrap">
+            <div className="mb:flex-col mb:items-center flex justify-around mb:justify-center flex-wrap">
                 { weatherForcast ? this.renderForcastWeather() : null }
             </div>
         );

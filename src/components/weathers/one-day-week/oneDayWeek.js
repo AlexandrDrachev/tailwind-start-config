@@ -5,7 +5,8 @@ import { renderSkyImgDay, renderSkyImgNight } from "../weather-today/weather-tod
 const OneDayWeek = ({ date, day, tempMax, tempMin, weatherOneDay, description, wind, newLocation }) => {
 
     return (
-        <div className="flex flex-col justify-center bg-blue-100 p-2 m-2 rounded border-2 border-gray-700 w-350 mb:w-300">
+        <div className="flex flex-col justify-center p-2 m-2 rounded border
+        border-white text-white w-350 mb:w-300 sm:bg-indigo-900 md:bg-indigo-900 lg:bg-indigo-900 xl:bg-indigo-900">
             <div className="flex flex-col items-center justify-center">
                 <div className="flex flex-col items-center w-full">
                     <span>

@@ -1,16 +1,20 @@
+
+const _ = require("lodash");
+const countryList = require('country-list');
+
 export default class ServiceApi {
 
-    urlCity = 'api.openweathermap.org/data/2.5/weather?q=London,uk&appid=5e25a2aa044e3b9adfed00a116b25a27';
-    urlCoords = 'api.openweathermap.org/data/2.5/weather?lat=47.8492488&lon=35.131175999999996&appid=5e25a2aa044e3b9adfed00a116b25a27';
-    weatherApiKey = '&appid=5e25a2aa044e3b9adfed00a116b25a27';
-    mapquestApiKey = '1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v';
-    mapquestApiUrl = 'http://www.mapquestapi.com/geocoding/v1/address?' +
-        'key=1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v&location=%D0%B7%D0%B0%D0%BF%D0%BE%D1%80%D0%BE%D0%B6%D1%8C%D0%B5';
-    baseUrl = 'api.openweathermap.org/data/2.5/weather?';
+    // urlCity = 'api.openweathermap.org/data/2.5/weather?q=London,uk&appid=5e25a2aa044e3b9adfed00a116b25a27';
+    // urlCoords = 'api.openweathermap.org/data/2.5/weather?lat=47.8492488&lon=35.131175999999996&appid=5e25a2aa044e3b9adfed00a116b25a27';
+    // weatherApiKey = '&appid=5e25a2aa044e3b9adfed00a116b25a27';
+    // mapquestApiKey = '1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v';
+    // mapquestApiUrl = 'http://www.mapquestapi.com/geocoding/v1/address?' +
+    //     'key=1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v&location=%D0%B7%D0%B0%D0%BF%D0%BE%D1%80%D0%BE%D0%B6%D1%8C%D0%B5';
+    // baseUrl = 'api.openweathermap.org/data/2.5/weather?';
     mapquestCityBase = 'https://www.mapquestapi.com/geocoding/v1/address?key=1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v&location=';
-    initialCityBase = 'http://www.mapquestapi.com/geocoding/v1/reverse?key=1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v' +
-        '&location=50.449988,30.523494&i';
-    weatherApiCoordsCity = 'api.openweathermap.org/data/2.5/weather?lat=50.449988&lon=30.523494&appid=5e25a2aa044e3b9adfed00a116b25a27';
+    // initialCityBase = 'http://www.mapquestapi.com/geocoding/v1/reverse?key=1Hgr6IGI5a9QoajX6VmGHK8AeZaNyE1v' +
+    //     '&location=50.449988,30.523494&i';
+    // weatherApiCoordsCity = 'api.openweathermap.org/data/2.5/weather?lat=50.449988&lon=30.523494&appid=5e25a2aa044e3b9adfed00a116b25a27';
     weatherForcast = 'api.openweathermap.org/data/2.5/forecast?lat=50.449988&lon=30.523494&appid=5e25a2aa044e3b9adfed00a116b25a27';
 
     //Kyiv:
@@ -18,9 +22,19 @@ export default class ServiceApi {
     // longi:  30.523494
 
     getCityCoords = async (city) => {
-        const res = await fetch(`${this.mapquestCityBase}${city}`);
+        const res = await fetch(`${this.mapquestCityBase}${city}`, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                "Access-Control-Allow-Methods": "GET",
+                "Access-Control-Allow-Headers": "Content-Type"
+            }
+        });
         if (!res.ok) {
-            throw new Error(`Could not fetch ${city}, received ${res.status}`);
+            // throw new Error(`Could not fetch ${city}, received ${res.status}`);
+            console.log('!res error!!!');
+            return document.location.reload();
         }
         const newRes = await res.json();
         return {
@@ -28,7 +42,10 @@ export default class ServiceApi {
             latitude: newRes.results[0].locations[0].latLng.lat,
             longitude: newRes.results[0].locations[0].latLng.lng
         };
-        // return await res.json();
+    };
+
+    getSelectCountry = async () => {
+        return await countryList.getNames();
     };
 
     getCityFromCoords = async (coords) => {
@@ -110,47 +127,31 @@ export default class ServiceApi {
                 return true;
         }
     };
+
+    getRapidLocation = async (country) => {
+        if (country === 'United States of America') {
+            country = 'united states'
+        }
+        return await fetch(`https://andruxnet-world-cities-v1.p.rapidapi.com/?query=${country}&searchby=country`, {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "andruxnet-world-cities-v1.p.rapidapi.com",
+                "x-rapidapi-key": "1d193fd42dmsh7e2a928a2b62febp10d690jsn8c73f05a2581"
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                const newRes = _.groupBy(res, (el) => {
+                    return el.state;
+                });
+                let resArr = [];
+                for (let key in newRes) {
+                    resArr.push(newRes[key]);
+                }
+                return resArr;
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
 }
-
-// coord:
-//     lon: 35.13
-// lat: 47.85
-
-// weather: Array(1)
-// 0:
-// id: 802
-// main: "Clouds"
-// description: "scattered clouds"
-// icon: "03d"
-// __proto__: Object
-// length: 1
-// __proto__: Array(0)
-// base: "stations"
-// main:
-//     temp: 294.27
-// feels_like: 288.79
-// temp_min: 293.15
-// temp_max: 295.15
-// pressure: 1006
-// humidity: 33
-// __proto__: Object
-// visibility: 10000
-// wind:
-//     speed: 6
-// deg: 120
-// __proto__: Object
-// clouds:
-//     all: 33
-// __proto__: Object
-// dt: 1583840693
-// sys:
-//     type: 1
-// id: 8902
-// country: "UA"
-// sunrise: 1583812943
-// sunset: 1583854633
-// __proto__: Object
-// timezone: 7200
-// id: 687700
-// name: "Zaporizhia"
-// cod: 200

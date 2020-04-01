@@ -1,7 +1,7 @@
-import { take, call, put, select, fork, cancel, race } from 'redux-saga/effects';
+import { take, call, put, select, fork, cancel } from 'redux-saga/effects';
 
 import {
-    getRegistrationSaga, saveUserActive, userExitSaga, userExit, userExitGenerator, addedNewUserInStateSaga,
+    getRegistrationSaga, saveUserActive, userExitSaga, userExitGenerator, addedNewUserInStateSaga,
     autorisationQuestSaga
 } from "./autorisation-actions";
 
@@ -10,7 +10,6 @@ export function* watchGetAutorisation() {
     while (true) {
         const loginObj = yield take("GET_AUTORISATION_ACTION");
         yield call(workerAutorisation, loginObj);
-        console.log('watchGetAutorisation iteration complete');
     }
 }
 
@@ -19,7 +18,6 @@ function* workerAutorisation(loginObj) {
     const checkAutorisation = usersStore.users.some((user) => {
         return user.userName === loginObj.payload.userName;
     });
-    console.log(checkAutorisation);
     if (checkAutorisation) {
         yield put(saveUserActive(loginObj.payload));
         yield take("USER_EXIT");
@@ -37,7 +35,6 @@ export function* watchGetRegistration() {
         yield fork(genWorkerRegistration);
         yield take(["USER_EXIT", "USER_EXIT_SAGA", "USER_EXIT_GENERATOR"]);
         yield put(userExitSaga());
-        console.log('watchGetRegistration iteration complete');
     }
 }
 
@@ -51,25 +48,18 @@ function* genWorkerRegistration() {
         }
         yield cancel(task);
         yield put(userExitGenerator());
-        console.log('genWorkerRegistration complete!!!');
 
 }
 
 function* workerGetRegistration(payload) {
-    console.log('newUserObj: ', payload);
     const { userNameReg, passwordReg, repeatPassword } = payload;
     const usersState = JSON.parse(JSON.stringify(yield select((state) => state.autorisationState.users)));
-    console.log('userNameReg: ', userNameReg);
-    console.log('passwordReg: ', passwordReg);
-    console.log('repeatPassword: ', repeatPassword);
     if (userNameReg === "" || passwordReg === "" || repeatPassword === "") {
         alert("incorrect form input");
-        console.log('workerGetRegistration complete!!!!!!!!');
         return yield put(userExitGenerator());
     }
     if (passwordReg !== repeatPassword) {
         alert("incorrect password entry");
-        console.log('workerGetRegistration complete!!!!!!!!');
         return yield put(userExitGenerator());
     }
     const checkUser = usersState.every((user) => {

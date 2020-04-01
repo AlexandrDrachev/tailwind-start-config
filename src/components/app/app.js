@@ -8,7 +8,6 @@ import Header from "../header";
 import { withService } from "../hoc";
 import Autorisation from "../autorisation";
 import WeatherToday from "../weathers/weather-today";
-import WeatherWeek from "../weathers/weather-week";
 import ServiceApi from "../../services/service-api";
 import { getWeatherDetails } from "../weathers/weather-actions";
 
@@ -59,19 +58,13 @@ class App extends Component{
     };
 
     render() {
-
-        // console.log(this.api.getDayFromForcast("2020-03-16"));
-        // console.log(this.api.getDayFromForcast(new Date()));
-        // console.log(new Date().toLocaleDateString());
-        // console.log(this.props.weatherDetails);
-        // console.log('******************8',this.viewBckgImage());
         const styles = {
             backgroundImage: `url(${this.viewBckgImage()})`
         };
 
         return (
             <div
-                className="flex flex-col items-center h-screen mb:min-h-screen w-screen bg-cover bg-center overflow-auto"
+                className="p-2 flex flex-col items-center h-screen mb:min-h-screen w-screen bg-cover bg-center overflow-auto"
                 style={styles}
                 >
                 <Header />
@@ -79,7 +72,6 @@ class App extends Component{
                     {!this.props.autorisation ? <Autorisation /> : <Route path="/" exact component={WeatherToday} />}
                     <Redirect to="/" from="/home"/>
                 </Switch>
-                {/*<WeatherWeek />*/}
             </div>
         );
     }

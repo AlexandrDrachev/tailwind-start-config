@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { Switch, Route, Link } from "react-router-dom";
 
 import ReactGoogleMap from "../../reactGoogleMap";
-import { clearFormCity } from "../../../actions/action";
-import {
-    getInputCity,
-    getNewLocation,
-    getNewWeatherToday,
-    getWeatherForcastAction
-} from "../weather-actions";
+import { getNewLocation, getNewWeatherToday, getWeatherForcastAction } from "../weather-actions";
 import ServiceApi from "../../../services/service-api";
 import Spinner from "../../spinner";
+import SearchCityPanel from '../../search-city-panel';
 import clearSkyDay from "../../../images/clearSkyDay.svg";
 import clearSkyNight from "../../../images/clearSkyNight.svg";
 import overcastDay from "../../../images/overcastDay.svg";
@@ -73,17 +67,6 @@ class WeatherToday extends Component {
         }
     };
 
-    onSubmit = (e) => {
-        e.preventDefault();
-        this.props.getNewLocation(this.props.inputCity);
-        this.props.getNewWeatherToday(this.props.newLocation);
-        this.props.clearCity();
-    };
-
-    onChangeCity = (e) => {
-        return this.props.getCity(e.target.value);
-    };
-
     active = false;
 
     renderForcast = () => {
@@ -94,7 +77,7 @@ class WeatherToday extends Component {
 
     render() {
 
-        const { inputCity, newLocation, weatherToday } = this.props;
+        const { newLocation, weatherToday } = this.props;
         const api = new ServiceApi();
 
         if (!this.props.newLocation) {
@@ -103,25 +86,11 @@ class WeatherToday extends Component {
 
         return (
             <div className="flex flex-col justify-center items-center">
-                {!this.active ? <div className="mb:w-300 mb:flex-wrap flex justify-center">
-                    <div className="shadow-md rounded mb:order-1 mb-2">
-                        <div className="w-full flex justify-start p-2 bg-yellow-600 rounded-t-md">
-                            <form onSubmit={this.onSubmit}>
-                                <input
-                                    onChange={(e) => this.onChangeCity(e)}
-                                    className="
-                                    border border-gray-400 rounded bg-gray-300
-                                    focus:border focus:border-blue-300"
-                                    type="text"
-                                    value={ inputCity }
-                                    placeholder="city"/>
-                                <button
-                                    onClick={onsubmit}
-                                    className="ml-1 px-2 bg-blue-500 rounded">ok</button>
-                            </form>
-                        </div>
+                {!this.active ? <div className="mb:w-300 mb:flex-wrap flex justify-center items-center">
+                    <SearchCityPanel />
+                    <div className="shadow-md rounded mb:order-1 mb-2 mx-5">
                         { weatherToday ?
-                            <div className="w-full flex flex-col justify-center items-start bg-yellow-500 rounded-b-md">
+                            <div className="w-full flex flex-col justify-center items-start bg-yellow-500 rounded-md">
                             <div className="flex justify-center mx-2 font-bold">
                                 <span>{new Date().toLocaleDateString()}</span>
                                 <span className="mx-5">{api.getDayFromForcast(new Date())}</span>
@@ -161,7 +130,7 @@ class WeatherToday extends Component {
                                 </span>
                         </div> : <Spinner /> }
                     </div>
-                    <div className="h-full flex flex-col items-center justify-center mb:order-2 mx-5">
+                    <div className="h-full flex flex-col items-center justify-center mb:order-2">
                         { newLocation ?
                             <ReactGoogleMap
                                 lati={newLocation.latitude}
@@ -172,7 +141,7 @@ class WeatherToday extends Component {
                 <button
                     onClick={() => this.renderForcast()}
                     className="bg-green-500 w-400 m-2 text-2xl text-white font-bold py-3 rounded hover:bg-green-600 mb:w-300">
-                    {!this.active ? 'show week forecast' : 'close week forcast'}
+                    {!this.active ? 'show week forcast' : 'close week forcast'}
                 </button>
                 { this.active ? <WeatherWeek /> : null }
             </div>
@@ -183,7 +152,6 @@ class WeatherToday extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        inputCity: state.locationsState.inputCity,
         newLocation: state.locationsState.newLocation,
         weatherToday: state.locationsState.weatherToday,
         weatherForcast: state.locationsState.weatherForcast
@@ -191,8 +159,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    getCity: getInputCity,
-    clearCity: clearFormCity,
     getNewLocation: getNewLocation,
     getNewWeatherToday: getNewWeatherToday,
     getWeatherForcastAction: getWeatherForcastAction

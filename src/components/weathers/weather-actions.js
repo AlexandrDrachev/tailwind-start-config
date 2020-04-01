@@ -1,23 +1,15 @@
 
 
-export const getInputCity = (city) => {
-    return {
-        type: "GET_INPUT_CITY",
-        payload: city
-    };
-};
-
-export const getInputCitySaga = (city) => {
-    return {
-        type: "GET_INPUT_CITY_SAGA",
-        payload: city
-    };
-};
-
 export const getNewLocation = (newCity) => {
     return {
         type: "GET_NEW_LOCATION",
         payload: newCity
+    };
+};
+
+export const clearLocationSaga = () => {
+    return {
+        type: "CLEAR_LOCATION_SAGA"
     };
 };
 
@@ -73,5 +65,46 @@ export const getUpdateWeatherForcastAction = (weatherObj) => {
     return {
         type: "GET_UPDATE_WEATHER_FORCAST_ACTION",
         payload: weatherObj
+    };
+};
+
+export const getSelectCountryAction = () => {
+    return {
+        type: "GET_SELECT_COUNTRY_ACTION"
+    };
+};
+
+export const getSelectCountrySaga = (countries) => {
+    return {
+        type: "GET_SELECT_COUNTRY_SAGA",
+        payload: countries
+    };
+};
+
+export const getSelectStatesAction = (country) => {
+    return {
+        type: "GET_SELECT_STATES_ACTION",
+        payload: country
+    };
+};
+
+export const getSelectStateSaga = (state) => {
+    return {
+        type: "GET_SELECT_STATE_SAGA",
+        payload: state
+    };
+};
+
+export const getSelectCitiesAction = (state) => {
+    return {
+        type: "GET_SELECT_CITIES_ACTION",
+        payload: state
+    };
+};
+
+export const getSelectCitiesSaga = (cities) => {
+    return {
+        type: "GET_SELECT_CITIES_SAGA",
+        payload: cities
     };
 };

@@ -1,47 +1,65 @@
-import { call, delay, put, take, select, fork } from "redux-saga/effects";
-import { getInputCitySaga, getNewLocationSaga, getNewWeatherTodaySaga, getWeatherForcastSaga, getWeatherDetailsSaga } from "../weather-actions";
+import { call, put, take, select } from "redux-saga/effects";
+import {
+    getNewLocationSaga, getSelectCountrySaga, getSelectCitiesSaga,
+    getNewWeatherTodaySaga, getWeatherForcastSaga, getWeatherDetailsSaga, getSelectStateSaga
+} from "../weather-actions";
 import ServiceApi from "../../../services/service-api";
 
-let latAndLng = {
-    lat: null,
-    lng: null
-};
-
-navigator.geolocation.getCurrentPosition((position) => {
-    latAndLng.lat = position.coords.latitude;
-    latAndLng.lng = position.coords.longitude;
-});
-
 const serviceApi = new ServiceApi();
-const { getCityCoords, getCityFromCoords, getWeatherCityFromCoords, getWeatherForcast } = serviceApi;
-
+const { getCityCoords, getCityFromCoords, getWeatherCityFromCoords,
+    getWeatherForcast, getSelectCountry, getRapidLocation } = serviceApi;
 
 export function* watchCoordsFunc() {
-    const { lat, lng } = latAndLng;
-    if (!lat || !lng) {
-        yield delay(1000);
-    }
+    let latAndLng = {
+        lat: 40.71,
+        lng: -74.01
+    };
+
+    // navigator.geolocation.getCurrentPosition((position) => {
+    //     latAndLng.lat = position.coords.latitude;
+    //     latAndLng.lng = position.coords.longitude;
+    // });
+    // const { lat, lng } = latAndLng;
+    // if (!lat || !lng) {
+    //     yield delay(1000);
+    //     latAndLng.lat = 50.449988;
+    //     latAndLng.lng = 30.523494;
+    // }
     const res = yield call(getCityFromCoords, latAndLng);
+    console.log(res);
     yield put(getNewLocationSaga(res));
 }
 
-//get city name from input
-export function* watchCurrentCity() {
+//get city name from select
+export function* watchGetCountriesFromSelect() {
     while (true) {
-        const { payload } = yield take("GET_INPUT_CITY");
-        yield call(handleInput, payload);
+        yield take("GET_SELECT_COUNTRY_ACTION");
+        let countries = yield call(getSelectCountry);
+        yield put(getSelectCountrySaga(countries));
     }
 }
 
-function* handleInput(city) {
-    yield put(getInputCitySaga(city));
+export function* watchGetStatesFromSelect() {
+    while (true) {
+        const { payload } = yield take("GET_SELECT_STATES_ACTION");
+        const states = yield call(getRapidLocation, payload);
+        yield put(getSelectStateSaga(states));
+    }
+}
+
+export function* watchGetCitiesFromSelect() {
+    while (true) {
+        const { payload } = yield take("GET_SELECT_CITIES_ACTION");
+        yield put(getSelectCitiesSaga(payload));
+
+    }
 }
 
 //get coords city from city name (geocoding)
 export function* watchNewLocation() {
     while (true) {
         const { payload } = yield take("GET_NEW_LOCATION");
-        yield call(workerGetNewCity, payload);
+        yield call(workerGetNewCity, payload.city);
     }
 }
 

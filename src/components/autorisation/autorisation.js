@@ -18,7 +18,6 @@ class Autorisation extends Component {
     autorisationObj = {};
 
     onSubmit = (e) => {
-        console.log('onsubmit!!!!!!!!!!!!!');
         e.preventDefault();
         return this.setState({
             userName: "",
@@ -80,14 +79,11 @@ class Autorisation extends Component {
 
     render() {
 
-        console.log('autorisation:', this.props.autorisation);
-        console.log('registration: ', this.props.registration);
-        console.log('users: ', this.props.users);
         return (
             <div className="flex justify-center p-2">
                 <div className="
                 flex flex-col justify-center items-center
-                w-500 h-300 mb:w-300 mb:h-300 border bg-white rounded-md">
+                w-500 h-300 mb:w-300 mb:h-300 border  rounded-md">
                     <div className="m-2 flex flex-col items-center">
                         <form
                             onSubmit={(e) => this.onSubmit(e)}>
@@ -131,7 +127,7 @@ class Autorisation extends Component {
                                         type="password"
                                         placeholder="repeat password"/> : null }
                                 <div className="w-full">
-                                    <label className="ml-10 my-4 flex items-center justify-start">
+                                    <label className="ml-10 my-4 text-white flex items-center justify-start">
                                         <input
                                             className="bg-gray-200 mr-2"
                                             type="checkbox"/>
@@ -145,7 +141,7 @@ class Autorisation extends Component {
                                     <div
                                         onClick={() => this.props.getRegistration()}
                                         className="
-                                        mx-2 px-1 py-1 border-2 border-gray-500 bg-blue-500
+                                        mx-2 px-1 py-1 border-2 border-gray-500 bg-blue-500 cursor-pointer
                                         rounded text-white font-bold hover:bg-blue-600">Registration</div>
                                     <button
                                         onClick={() => this.getLogin()}
@@ -155,7 +151,7 @@ class Autorisation extends Component {
                                     <div
                                         onClick={() => this.props.autorisationQuestAction()}
                                         className="
-                                        m-2 px-1 py-1 border-2 border-gray-500 bg-yellow-500
+                                        m-2 px-1 py-1 border-2 border-gray-500 bg-yellow-500 cursor-pointer
                                         rounded text-blue-700 font-bold hover:bg-yellow-600">I'm a guest</div>
                                 </div> :
                                 <div className="m-2 flex flex-wrap justify-center items-center">

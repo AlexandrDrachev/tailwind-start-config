@@ -1,16 +1,16 @@
 export const initialLocationsState = {
-    // latitudeCity: null,
-    // longitudeCity: null,
-    inputCity: "",
+    selectCountry: null,
+    selectState: null,
+    selectCity: null,
     newLocation: null,
     weatherToday: null,
     weatherForcast: null,
     weatherDetails: {
         day: false,
-        night: true,
+        night: false,
         snow: false,
         rain: false,
-        summer: true,
+        summer: false,
         autumn: false,
         winter: false,
         spring: false
@@ -23,20 +23,17 @@ export const locationReducer = (state, action) => {
     }
     console.log('action: ', action);
     switch (action.type) {
-        case "GET_INPUT_CITY_SAGA":
-            return {
-                ...state,
-                inputCity: action.payload
-            };
-        case "CLEAR_FORM_CITY":
-            return {
-                ...state,
-                inputCity: ""
-            };
         case "GET_NEW_LOCATION_SAGA":
             return {
                 ...state,
                 newLocation: action.payload,
+            };
+        case "CLEAR_LOCATION_SAGA":
+            return {
+                ...state,
+                selectCountry: null,
+                selectState: null,
+                selectCity: null
             };
         case "GET_NEW_WEATHER_TODAY_SAGA":
             return {
@@ -52,6 +49,21 @@ export const locationReducer = (state, action) => {
             return {
                 ...state,
                 weatherDetails: action.payload
+            };
+        case "GET_SELECT_COUNTRY_SAGA":
+            return {
+                ...state,
+                selectCountry: action.payload
+            };
+        case "GET_SELECT_STATE_SAGA":
+            return {
+                ...state,
+                selectState: action.payload
+            };
+        case "GET_SELECT_CITIES_SAGA":
+            return {
+                ...state,
+                selectCity: action.payload
             };
 
         default:
