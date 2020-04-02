@@ -31,6 +31,17 @@ module.exports = {
       'lg': {'min': '1024px', 'max': '1279px'},
       'xl': {'min': '1280px'},
     },
+    fontFamily: {
+      // 'sans': ['-apple-system', 'BlinkMacSystemFont'],
+      // 'serif': ['Georgia', 'Cambria'],
+      // 'mono': ['SFMono-Regular', 'Menlo'],
+      // 'display': ['Oswald'],
+      // 'body': ['Open Sans'],
+      'doHyeon' : ['Do Hyeon'],
+      'spicyRice' : ['Spicy Rice'],
+      'abrilFatface' : ['Abril Fatface'],
+      'fredokaOne' : ['Fredoka One'],
+    }
   },
   variants: {},
   plugins: [],

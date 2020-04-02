@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
 import { autorisationSaga } from "../../actions/action";
 import { userExit } from "../autorisation/autorisation-actions";
 import ServiceApi from "../../services/service-api";
+import BgMask from '../bg-mask';
 
 class Header extends Component {
 
@@ -77,23 +79,25 @@ class Header extends Component {
 
         return (
             <div
-                className="flex justify-between items-center border
-            w-full my-2 min-h-100 rounded-md p-2 text-white font-bold mb:flex-wrap text-xl">
-                <div>
+                className="relative flex justify-between items-center border
+            w-full my-2  rounded-md p-2 text-white font-bold mb:flex-wrap text-xl">
+                <BgMask />
+                <div className="z-20">
                     <h2 className="mb:order-1">My Weather App</h2>
                     {this.showCurrentTime()}
                 </div>
-                <ul className="flex justify-center mb:order-3 mb:w-full">
-                    {/*<Link to="/home"><li>home</li></Link>*/}
+                <div className="flex justify-center mb:order-3 mb:w-full">
+                    {userActive ? <Link className="z-20 mb:mr-2 mr-5" to="/home"><div className="font-doHyeon">Home</div></Link> : null}
+                    {userActive ? <Link className="z-20 mb:mr-2 mr-5" to="/partners"><div className="font-doHyeon">Partners</div></Link> : null}
                     {/*<Link to="/forcast"><li className="mx-10">forcast</li></Link>*/}
-                </ul>
-                <div className="mb:order-2">
+                </div>
+                <div className="mb:order-2 z-20">
                     {userActive ?
                         <div className="flex flex-col items-end">
                             <span onClick={() => userExit()} className="font-bold text-red-600 cursor-pointer">exit</span>
                             <span
                                 className="cursor-pointer"
-                                onClick={() => autorisationSaga()}>
+                                onClick={() => {}}>
                             {userActive.userName}
                         </span>
                         </div> : null}

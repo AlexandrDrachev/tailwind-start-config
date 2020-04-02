@@ -542,7 +542,7 @@ pre,
 code,
 kbd,
 samp {
-  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 /**
@@ -3795,16 +3795,20 @@ video {
   clear: both;
 }
 
-.font-sans {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+.font-doHyeon {
+  font-family: Do Hyeon;
 }
 
-.font-serif {
-  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+.font-spicyRice {
+  font-family: Spicy Rice;
 }
 
-.font-mono {
-  font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+.font-abrilFatface {
+  font-family: Abril Fatface;
+}
+
+.font-fredokaOne {
+  font-family: Fredoka One;
 }
 
 .font-hairline {
@@ -14146,16 +14150,20 @@ video {
     clear: both;
   }
 
-  .mb\:font-sans {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  .mb\:font-doHyeon {
+    font-family: Do Hyeon;
   }
 
-  .mb\:font-serif {
-    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  .mb\:font-spicyRice {
+    font-family: Spicy Rice;
   }
 
-  .mb\:font-mono {
-    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  .mb\:font-abrilFatface {
+    font-family: Abril Fatface;
+  }
+
+  .mb\:font-fredokaOne {
+    font-family: Fredoka One;
   }
 
   .mb\:font-hairline {
@@ -24498,16 +24506,20 @@ video {
     clear: both;
   }
 
-  .sm\:font-sans {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  .sm\:font-doHyeon {
+    font-family: Do Hyeon;
   }
 
-  .sm\:font-serif {
-    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  .sm\:font-spicyRice {
+    font-family: Spicy Rice;
   }
 
-  .sm\:font-mono {
-    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  .sm\:font-abrilFatface {
+    font-family: Abril Fatface;
+  }
+
+  .sm\:font-fredokaOne {
+    font-family: Fredoka One;
   }
 
   .sm\:font-hairline {
@@ -34850,16 +34862,20 @@ video {
     clear: both;
   }
 
-  .md\:font-sans {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  .md\:font-doHyeon {
+    font-family: Do Hyeon;
   }
 
-  .md\:font-serif {
-    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  .md\:font-spicyRice {
+    font-family: Spicy Rice;
   }
 
-  .md\:font-mono {
-    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  .md\:font-abrilFatface {
+    font-family: Abril Fatface;
+  }
+
+  .md\:font-fredokaOne {
+    font-family: Fredoka One;
   }
 
   .md\:font-hairline {
@@ -45202,16 +45218,20 @@ video {
     clear: both;
   }
 
-  .lg\:font-sans {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  .lg\:font-doHyeon {
+    font-family: Do Hyeon;
   }
 
-  .lg\:font-serif {
-    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  .lg\:font-spicyRice {
+    font-family: Spicy Rice;
   }
 
-  .lg\:font-mono {
-    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  .lg\:font-abrilFatface {
+    font-family: Abril Fatface;
+  }
+
+  .lg\:font-fredokaOne {
+    font-family: Fredoka One;
   }
 
   .lg\:font-hairline {
@@ -55554,16 +55574,20 @@ video {
     clear: both;
   }
 
-  .xl\:font-sans {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  .xl\:font-doHyeon {
+    font-family: Do Hyeon;
   }
 
-  .xl\:font-serif {
-    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  .xl\:font-spicyRice {
+    font-family: Spicy Rice;
   }
 
-  .xl\:font-mono {
-    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  .xl\:font-abrilFatface {
+    font-family: Abril Fatface;
+  }
+
+  .xl\:font-fredokaOne {
+    font-family: Fredoka One;
   }
 
   .xl\:font-hairline {

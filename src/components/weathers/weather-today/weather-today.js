@@ -16,7 +16,7 @@ import rainyNight from "../../../images/rainyNight.svg";
 import snowDay from "../../../images/snowDay.svg";
 import snowNight from "../../../images/snowNight.svg";
 import WeatherWeek from "../weather-week";
-
+import BgMask from '../../bg-mask';
 export const renderSkyImgDay = (weatherToday) => {
 
     return (
@@ -88,46 +88,49 @@ class WeatherToday extends Component {
             <div className="flex flex-col justify-center items-center">
                 {!this.active ? <div className="mb:w-300 mb:flex-wrap flex justify-center items-center">
                     <SearchCityPanel />
-                    <div className="shadow-md rounded mb:order-1 mb-2 mx-5">
+                    <div className="relative shadow-md rounded mb:order-1 mb-2 mx-5">
                         { weatherToday ?
-                            <div className="w-full flex flex-col justify-center items-start bg-yellow-500 rounded-md">
-                            <div className="flex justify-center mx-2 font-bold">
-                                <span>{new Date().toLocaleDateString()}</span>
-                                <span className="mx-5">{api.getDayFromForcast(new Date())}</span>
-                            </div>
-                            <span
-                                className="ml-2 font-bold" >{newLocation.cityName}</span>
-                            <span className="ml-2 font-bold">
+                        <div className="text-white w-300 h-300 flex flex-col justify-center items-start border border-white rounded">
+                            <BgMask />
+                            <div className="z-20 flex flex-col justify-center items-center w-full">
+                                <div className="flex justify-center mx-2 font-bold">
+                                    <span>{new Date().toLocaleDateString()}</span>
+                                    <span className="mx-5">{api.getDayFromForcast(new Date())}</span>
+                                </div>
+                                <span
+                                    className="ml-2 font-bold" >{newLocation.cityName}</span>
+                                <span className="ml-2 font-bold">
                                 Coordinates:
                                 <div className="ml-4 flex flex-col items-start">
                                     <span>lat: {weatherToday.lat}</span>
                                     <span>lng: {weatherToday.lon}</span>
                                 </div>
                             </span>
-                            <div className="w-full ml-2 font-bold flex flex-col items-start">
-                                <span>clouds:</span>
-                                <div>
-                                    <div className="flex flex-wrap">
-                                        <span className="ml-4">{+weatherToday.sky}%</span>
-                                        <span className="mx-2 font-bold">{weatherToday.description}</span>
-                                        {
-                                            new Date().getHours() >= 6 && new Date().getHours() < 18 ?
-                                                renderSkyImgDay(weatherToday) : renderSkyImgNight(weatherToday)}
+                                <div className="w-full ml-2 font-bold flex flex-col items-start">
+                                    <span>clouds:</span>
+                                    <div>
+                                        <div className="flex flex-wrap">
+                                            <span className="ml-4">{+weatherToday.sky}%</span>
+                                            <span className="mx-2 font-bold">{weatherToday.description}</span>
+                                            {
+                                                new Date().getHours() >= 6 && new Date().getHours() < 18 ?
+                                                    renderSkyImgDay(weatherToday) : renderSkyImgNight(weatherToday)}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <span className="ml-2 font-bold">
+                                <span className="ml-2 font-bold">
                                 temp: {(+weatherToday.temp - 273).toFixed(1)}&#176;
                             </span>
-                            <span className="ml-2 font-bold">
+                                <span className="ml-2 font-bold">
                                 temp-min: {(+weatherToday.tempMin -273).toFixed(1)}&#176;
                             </span>
-                            <span className="ml-2 font-bold">
+                                <span className="ml-2 font-bold">
                                 temp-max: {(+weatherToday.tempMax -273).toFixed(1)}&#176;
                             </span>
-                            <span className="ml-2 font-bold">
+                                <span className="ml-2 font-bold">
                                 wind: {weatherToday.wind}
                                 </span>
+                            </div>
                         </div> : <Spinner /> }
                     </div>
                     <div className="h-full flex flex-col items-center justify-center mb:order-2">

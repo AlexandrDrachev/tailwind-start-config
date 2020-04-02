@@ -10,6 +10,7 @@ import Autorisation from "../autorisation";
 import WeatherToday from "../weathers/weather-today";
 import ServiceApi from "../../services/service-api";
 import { getWeatherDetails } from "../weathers/weather-actions";
+import Partners from '../partners';
 
 class App extends Component{
 
@@ -62,6 +63,8 @@ class App extends Component{
             backgroundImage: `url(${this.viewBckgImage()})`
         };
 
+        // this.api.getRapidHotels();
+
         return (
             <div
                 className="p-2 flex flex-col items-center h-screen mb:min-h-screen w-screen bg-cover bg-center overflow-auto"
@@ -70,6 +73,7 @@ class App extends Component{
                 <Header />
                 <Switch>
                     {!this.props.autorisation ? <Autorisation /> : <Route path="/" exact component={WeatherToday} />}
+                    {!this.props.autorisation ? <Autorisation /> : <Route path="/partners" exact component={Partners} />}
                     <Redirect to="/" from="/home"/>
                 </Switch>
             </div>

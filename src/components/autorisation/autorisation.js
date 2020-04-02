@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { addedNewUserInStateAction, getAutorisationAction,
     getRegistration, userExit, userExitSaga, autorisationQuestAction } from "./autorisation-actions";
+import BgMask from '../bg-mask';
 
 class Autorisation extends Component {
 
@@ -80,11 +81,12 @@ class Autorisation extends Component {
     render() {
 
         return (
-            <div className="flex justify-center p-2">
+            <div className="relative flex justify-center">
+                <BgMask />
                 <div className="
-                flex flex-col justify-center items-center
-                w-500 h-300 mb:w-300 mb:h-300 border  rounded-md">
-                    <div className="m-2 flex flex-col items-center">
+                z-20 flex flex-col justify-center items-center
+                w-500 h-300 mb:w-300 mb:h-300 border rounded">
+                    <div className="flex flex-col items-center">
                         <form
                             onSubmit={(e) => this.onSubmit(e)}>
                             <div className="flex flex-col items-center">

@@ -154,4 +154,20 @@ export default class ServiceApi {
                 console.log(err);
             });
     };
+
+    getRapidHotels = async () => {
+
+        return await fetch("https://hotels4.p.rapidapi.com/locations/search?locale=en_US&query=ukraine", {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "hotels4.p.rapidapi.com",
+                "x-rapidapi-key": "1d193fd42dmsh7e2a928a2b62febp10d690jsn8c73f05a2581"
+            }
+        })
+            .then(response => response.json())
+            .then(res => console.log(res))
+            .catch(err => {
+                console.log(err);
+            });
+    };
 }

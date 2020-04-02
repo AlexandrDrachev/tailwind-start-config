@@ -6,6 +6,7 @@ import {
     getSelectStatesAction, getSelectCitiesAction, getNewLocation,
     getSelectCountryAction
 } from "../weathers/weather-actions";
+import BgMask from '../bg-mask';
 
 class SearchCityPanel extends Component {
 
@@ -83,10 +84,11 @@ class SearchCityPanel extends Component {
 
     render() {
         return (
-            <div className="w-300 h-300 border border-white rounded p-2 flex justify-center items-center mb-2">
+            <div className="relative w-300 h-300 border border-white rounded p-2 flex justify-center items-center mb-2">
+                <BgMask />
                 <form
                     onSubmit={(e) => this.onSubmit(e)}
-                    className="w-11/12 flex flex-col justify-center items-center">
+                    className="z-20 w-full flex flex-col justify-center items-center">
                     <fieldset className="w-full border border-gray-500 rounded p-2">
                         <legend className="text-white flex justify-center items-center text-xs">select a country</legend>
                         <Select
