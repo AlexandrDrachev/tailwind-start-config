@@ -11,6 +11,9 @@ import WeatherToday from "../weathers/weather-today";
 import ServiceApi from "../../services/service-api";
 import { getWeatherDetails } from "../weathers/weather-actions";
 import Partners from '../partners';
+import Partner1 from '../partners/partner1';
+import Partner2 from '../partners/partner2';
+import Partner3 from '../partners/partner3';
 
 class App extends Component{
 
@@ -74,6 +77,9 @@ class App extends Component{
                 <Switch>
                     {!this.props.autorisation ? <Autorisation /> : <Route path="/" exact component={WeatherToday} />}
                     {!this.props.autorisation ? <Autorisation /> : <Route path="/partners" exact component={Partners} />}
+                    <Route path="/partners/partner1" component={Partner1} />
+                    <Route path="/partners/partner2" component={Partner2} />
+                    <Route path="/partners/partner3" component={Partner3} />
                     <Redirect to="/" from="/home"/>
                 </Switch>
             </div>

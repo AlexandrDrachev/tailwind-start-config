@@ -133,7 +133,7 @@ class WeatherToday extends Component {
                             </div>
                         </div> : <Spinner /> }
                     </div>
-                    <div className="h-full flex flex-col items-center justify-center mb:order-2">
+                    <div className="mb:order-2">
                         { newLocation ?
                             <ReactGoogleMap
                                 lati={newLocation.latitude}

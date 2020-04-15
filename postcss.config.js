@@ -17,7 +17,14 @@ const purgecss = require('@fullhuman/postcss-purgecss')({
         './src/components/weathers/one-day-week/oneDayWeek.js',
         './src/components/weathers/weather-today/weather-today.js',
         './src/components/weathers/weather-week/weather-week.js',
-        './src/components/partners/partners.js'
+        './src/components/partners/partners.js',
+        './src/components/partners/partner1/partner1.js',
+        './src/components/partners/partner1/home/home.js',
+        './src/components/partners/partner1/apartaments/apartaments.js',
+        './src/components/partners/partner1/contacts/contacts.js',
+        './src/components/partners/partner1/calculator/calculator.js',
+        './src/components/partners/partner2/partner2.js',
+        './src/components/partners/partner3/partner3.js'
     ],
 
     // Include any special characters you're using in this regular expression

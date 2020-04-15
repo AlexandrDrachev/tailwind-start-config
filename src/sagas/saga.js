@@ -9,9 +9,26 @@ import {
     watchWeatherDetails,
     watchUpdateWeatherForcast
 } from "../components/weathers/sagas/locations-saga";
-import { watchCoordsFunc, watchGetCountriesFromSelect, watchGetCitiesFromSelect,
-    watchGetStatesFromSelect } from "../components/weathers/sagas/locations-saga";
-import { watchGetAutorisation, watchGetRegistration, watchAutorisationQuest } from "../components/autorisation/autorisation-saga";
+
+import {
+    watchCoordsFunc,
+    watchGetCountriesFromSelect,
+    watchGetCitiesFromSelect,
+    watchGetStatesFromSelect
+} from "../components/weathers/sagas/locations-saga";
+
+import {
+    watchGetAutorisation,
+    watchGetRegistration,
+    watchAutorisationQuest
+} from "../components/autorisation/autorisation-saga";
+
+import {
+    watchPartner1SagaTest,
+    watcherGetStartOfRest,
+    watcherPrevOrNextMonth,
+    watcherGetStartDateOfRest
+} from "../components/partners/partner1/partner1-saga";
 
 export function* rootSagas() {
     yield all([
@@ -27,7 +44,11 @@ export function* rootSagas() {
         watchAutorisationQuest(),
         watchGetCountriesFromSelect(),
         watchGetStatesFromSelect(),
-        watchGetCitiesFromSelect()
+        watchGetCitiesFromSelect(),
+        watchPartner1SagaTest(),
+        watcherGetStartOfRest(),
+        watcherPrevOrNextMonth(),
+        watcherGetStartDateOfRest()
     ]);
 }
 
