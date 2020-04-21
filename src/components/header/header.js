@@ -44,7 +44,7 @@ class Header extends Component {
     };
 
     render() {
-        const { userActive, autorisationSaga, userExit } = this.props;
+        const { userActive, userExit } = this.props;
 
         return (
             <div

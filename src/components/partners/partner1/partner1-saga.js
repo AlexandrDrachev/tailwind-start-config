@@ -1,4 +1,4 @@
-import { take, put, call, fork, race, select } from 'redux-saga/effects';
+import { take, put, call, select } from 'redux-saga/effects';
 
 import {
     partner1StateTestSaga,
@@ -6,7 +6,9 @@ import {
     getEndMonthSaga,
     getCurrentMonthSaga,
     getStartOfRestSaga,
-    startOfRestErrorSaga
+    startOfRestErrorSaga,
+    getEndOfRestSaga,
+    getAllDaysOfRestSaga
 } from './partner1-action';
 import ServiceApi from '../../../services/service-api';
 const _ = require("lodash");
@@ -57,7 +59,6 @@ export function* watcherGetStartOfRest() {
         yield put(getCurrentMonthSaga(result));
         yield put(getStartMonthSaga(result));
         yield put(getEndMonthSaga(result));
-        console.log('saga iteration complete!');
     }
 }
 
@@ -226,7 +227,6 @@ function* workerGetNextEndMonth() {
 
 export function* watcherGetStartDateOfRest() {
     while (true) {
-        console.log('start watcherGetStartDateOfRest iteration...');
         const { payload } = yield take("GET_START_DATE_OF_REST_ACTION");
         const { year, month, date } = payload;
 
@@ -238,20 +238,135 @@ export function* watcherGetStartDateOfRest() {
             indexDay: new Date(year, month, date).getDay(),
             day: serviceApi.getDayFromForcast(new Date(year, month, date))
         };
-        const currentMonth = yield select(state => state.partner1State.currentMonth);
-        const date1 = new Date(currentMonth[0].year, currentMonth[0].indexMonth, new Date().getDate());
-        const date2 = new Date(startDateObj.year, startDateObj.indexMonth, startDateObj.date);
-        console.log('date1 > date2 ?', date1 > date2);
-
-        // const action = yield take(["GET_START_OF_REST_SAGA", "START_OF_REST_ERROR_SAGA"]);
+        const currentMonth = yield select(state => state.partner1State.startMonth);
+        const endOfRest = yield select(state => state.partner1State.endOfRest);
 
         if (
             new Date(currentMonth[0].year, currentMonth[0].indexMonth, new Date().getDate()) >=
             new Date(startDateObj.year, startDateObj.indexMonth, startDateObj.date)) {
             yield put(startOfRestErrorSaga(true));
+        } else if (endOfRest && new Date(endOfRest.year, endOfRest.indexMonth, endOfRest.date) <=
+                new Date(startDateObj.year, startDateObj.indexMonth, startDateObj.date)) {
+            yield put(startOfRestErrorSaga(true));
         } else {
             yield put(getStartOfRestSaga(startDateObj));
         }
-        console.log('watcherGetStartDateOfRest iteration complete!');
     }
+}
+
+export function* watcherGetEndDateOfRest() {
+    while (true) {
+        const { payload } = yield take("GET_END_DATE_OF_REST_ACTION");
+        const { year, month, date } = payload;
+
+        const endDateObj = {
+            year: new Date(year, month, date).getFullYear(),
+            indexMonth: new Date(year, month, date).getMonth(),
+            month: serviceApi.getMonthTransform(new Date(year, month, date).getMonth()),
+            date: new Date(year, month, date).getDate(),
+            indexDay: new Date(year, month, date).getDay(),
+            day: serviceApi.getDayFromForcast(new Date(year, month, date))
+        };
+        const currentMonth = yield select(state => state.partner1State.startOfRest);
+
+        if (
+            new Date(currentMonth.year, currentMonth.indexMonth, currentMonth.date) >=
+            new Date(endDateObj.year, endDateObj.indexMonth, endDateObj.date)) {
+            yield put(startOfRestErrorSaga(true));
+        } else {
+            yield put(getEndOfRestSaga(endDateObj));
+        }
+    }
+}
+
+export function* watcherGetAllDaysOfRest() {
+    while (true) {
+        yield take("GET_ALL_DAYS_OF_REST_ACTION");
+        const countDays = yield call(workerGetAllDaysOfRest);
+        yield put(getAllDaysOfRestSaga(countDays));
+        console.log('watcher getCalculation iteration complete!');
+    }
+}
+
+function* workerGetAllDaysOfRest() {
+    const startOfRest = yield select((state) => state.partner1State.startOfRest);
+    const endOfRest = yield select((state) => state.partner1State.endOfRest);
+    const allDays = [];
+    let startDate = +JSON.parse(JSON.stringify(startOfRest.date));
+    for (startDate; new Date(startOfRest.year, startOfRest.indexMonth, startDate) <
+    new Date(endOfRest.year, endOfRest.indexMonth, endOfRest.date); startDate++) {
+        allDays.push(startDate);
+    }
+    return allDays.length;
+}
+
+export function* watcherGetCostCalculation() {
+    while (true) {
+        console.log('start iteration saga');
+        const { people, apartaments, menu, services } = yield take("GET_COST_CALCULATION_ACTION");
+        yield call(workerGetCostCalculation, { people, apartaments, menu, services });
+        console.log('watcherGetCostCalculation iteration complete!');
+    }
+}
+
+function* workerGetCostCalculation({ people, apartaments, menu, services }) {
+    const newCostCalculation = {
+        people: people,
+        apartaments: apartaments,
+        menu: menu,
+        services: services
+    };
+    let costOfApartaments;
+    let costOfBreakfast;
+    let costOfLunch;
+    let costOfDinner;
+    let costOfServices = 0;
+    let priceForApartaments = yield select((state) => state.partner1State.priceForApartaments);
+    let priceForMenu = yield select((state) => state.partner1State.priceForMenu);
+    let priceForServices = yield select((state) => state.partner1State.priceForServices);
+    let currentApartaments;
+    let currentBreakfast;
+    let currentLunch;
+    let currentDinner;
+    for (let key in priceForApartaments) {
+        if (priceForApartaments[key].type === apartaments.type) {
+            currentApartaments = priceForApartaments[key];
+        }
+    }
+    for (let key in priceForMenu.breakfast) {
+        if (priceForMenu.breakfast[key].type === menu.breakfast.type) {
+            currentBreakfast = priceForMenu.breakfast[key];
+        }
+    }
+    for (let key in priceForMenu.lunch) {
+        if (priceForMenu.lunch[key].type === menu.lunch.type) {
+            currentLunch = priceForMenu.lunch[key];
+        }
+    }
+    for (let key in priceForMenu.dinner) {
+        if (priceForMenu.dinner[key].type === menu.dinner.type) {
+            currentDinner = priceForMenu.dinner[key];
+        }
+    }
+    costOfApartaments = (currentApartaments.price.adult * people.adult.value) +
+        (currentApartaments.price.children * people.children.value);
+
+    costOfBreakfast = (currentBreakfast.price.adult * people.adult.value) +
+        (currentBreakfast.price.children * people.children.value);
+
+    costOfLunch = (currentLunch.price.adult * people.adult.value) +
+        (currentLunch.price.children * people.children.value);
+
+    costOfDinner = (currentDinner.price.adult * people.adult.value) +
+        (currentDinner.price.children * people.children.value);
+
+    const allDays = yield select((state) => state.partner1State.allDays);
+
+    let sumCash = (costOfApartaments + costOfBreakfast + costOfLunch + costOfDinner + costOfServices) * allDays;
+
+
+
+
+    console.log('sumCash from saga: ', sumCash);
+    console.log('currentLunch from saga: ', currentLunch);
 }

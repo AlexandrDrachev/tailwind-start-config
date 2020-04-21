@@ -2,19 +2,39 @@
 
 export const initialPartner1State = {
     partner1Test: "partner1StateIsReady!",
-    homeText: "A unique oasis paradise boldly perched on Peristeras Hill on the outskirts of Ierapetra where the sun , the sea, the pool, the garden and the hosts of  Nicolas Apartments invitingly entice and ensure a majestic, enchanting , romantic , unforgettable getaway.\n" +
+    homeText: "A unique oasis paradise boldly perched on Peristeras Hill on the outskirts of Ierapetra where the sun ," +
+    " the sea, the pool, the garden and the hosts of  Nicolas Apartments invitingly entice and ensure a majestic," +
+    " enchanting , romantic , unforgettable getaway.\n" +
     "\n" +
-    "Nicolas Holiday Apartments, a sea side location on the South Coast of Crete, east of Ierapetra , which is the southern most town in Europe  having the sunniest, warmest disposition all the year round. Exceptional for family holidays, for quiet, majestic, quality time,  far from the bustling city life, relaxing, swimming, snorkeling, wining, dining and tasting local home made delicacies. Weddings, Birthdays, Proposals, Surprise Parties all have happened here successfully catered for by the Nicolas Team.\n" +
+    "Nicolas Holiday Apartments, a sea side location on the South Coast of Crete, east of Ierapetra , " +
+    "which is the southern most town in Europe  having the sunniest, warmest disposition all the year round. " +
+    "Exceptional for family holidays, for quiet, majestic, quality time,  far from the bustling city life, " +
+    "relaxing, swimming, snorkeling, wining, dining and tasting local home made delicacies. " +
+    "Weddings, Birthdays, Proposals, Surprise Parties all have " +
+    "happened here successfully catered for by the Nicolas Team.\n" +
     "\n" +
-    "The charming, self-contained holiday apartments made up of STUDIOS, 2ROOM APARTMENTS and MAISONETTES have been lovingly improved over the years and boast modern bathrooms and quaint, cosy interiors.  \n" +
+    "The charming, self-contained holiday apartments made up of STUDIOS, " +
+    "2ROOM APARTMENTS and MAISONETTES have been lovingly improved over the years and boast modern bathrooms and quaint, " +
+    "cosy interiors.  \n" +
     "\n" +
-    "The swimming pool and children’s pool is a swimmer’s delight. The depth, the length and the diving board combination plus the endless views to the sea are the essence of a perfect, fun-filled holiday destination in a family  friendly , relaxing atmosphere.\n" +
+    "The swimming pool and children’s pool is a swimmer’s delight. " +
+    "The depth, the length and the diving board combination plus the endless views to the sea are the essence of a perfect, " +
+    "fun-filled holiday destination in a family  friendly , relaxing atmosphere.\n" +
     "\n" +
-    "This immaculate, well-kept hotel rental east of Ierapetra , 20metres above sea level offering spectacular views of the Mediterranean Sea with breathtaking views of pristine, sparkling clear waters  and the colourful surroundings of the lush oleander and olive tree gardens from every holiday apartment, contribute to a relaxing, wind-down experience ensuring  a memborable stay. Steps lead to the crystal clear waters of Peristeras Beach to an accessible bay weather permitting.\n" +
+    "This immaculate, well-kept hotel rental east of Ierapetra , " +
+    "20metres above sea level offering spectacular views of the Mediterranean Sea with breathtaking views of pristine, " +
+    "sparkling clear waters  and the colourful surroundings of the lush oleander and olive tree gardens " +
+    "from every holiday apartment, contribute to a relaxing, wind-down experience ensuring  a memborable stay. " +
+    "Steps lead to the crystal clear waters of Peristeras Beach to an accessible bay weather permitting.\n" +
     "\n" +
-    "Home made meals are available on the premises in the eating area above the pool. Breakfast, with home made jams and local delicacies can be enjoyed overlooking the pool and sea on a daily basis with an abundance of variety. Dinner is a friendly get together with traditional home cooking , freshly made daily using olive oil picked by the hosts and fresh, local ingredients. Every morning the daily menu is announced for those joining the evening meal , pre-ordering is essential.  \n" +
+    "Home made meals are available on the premises in the eating area above the pool. " +
+    "Breakfast, with home made jams and local delicacies can be enjoyed overlooking the pool " +
+    "and sea on a daily basis with an abundance of variety. Dinner is a friendly get together " +
+    "with traditional home cooking , freshly made daily using olive oil picked by the hosts and fresh, local ingredients. " +
+    "Every morning the daily menu is announced for those joining the evening meal , pre-ordering is essential.  \n" +
     "\n" +
-    "Ask for tips and ideas for daily tours that are hideaways and favourites among the locals. We know the best places and will share them with you so you can enjoy the secrets of wonderful East Crete.\n" +
+    "Ask for tips and ideas for daily tours that are hideaways and favourites among the locals. " +
+    "We know the best places and will share them with you so you can enjoy the secrets of wonderful East Crete.\n" +
     "\n" +
     "Close to us -\n" +
     "\n" +
@@ -63,7 +83,237 @@ export const initialPartner1State = {
     endMonth: null,
     startOfRest: null,
     startOfRestError: false,
-    endOfRest: null
+    endOfRest: null,
+    people: {
+        adult: 2,
+        children: 0
+    },
+    allDays: 0,
+    priceForApartaments: {
+        deluxeBalconyStudio: {
+            type: "Deluxe Balcony Studio",
+            price: {
+                adult: 110,
+                children: 50,
+            }
+        },
+        studio: {
+            type: "Studio",
+            price: {
+                adult: 100,
+                children: 40,
+            }
+        },
+        poolSideMaisonette: {
+            type: "Pool Side Maisonette",
+            price: {
+                adult: 120,
+                children: 60,
+            }
+        },
+        gardenViewMaisonette: {
+            type: "Garden View Maisonette",
+            price: {
+                adult: 130,
+                children: 60,
+            }
+        },
+        twoRoomApartment: {
+            type: "Two Room Apartment",
+            price: {
+                adult: 150,
+                children: 70,
+            }
+        },
+    },
+    priceForMenu: {
+        breakfast: {
+            standart: {
+                type: "standart breakfast",
+                menu: ["soup", "garnish", "salad", "dessert", "drink"],
+                price: {
+                    adult: 10,
+                    children: 5
+                }
+            },
+            diet: {
+                type: "diet",
+                menu: ["bouillon", "cereals", "salad", "biscuits", "drink"],
+                price: {
+                    adult: 10,
+                    children: 5
+                }
+            },
+            unlimited: {
+                type: "unlimited",
+                menu: ["all inclusive"],
+                price: {
+                    adult: 15,
+                    children: 5
+                }
+            },
+            notEat: {
+                type: "no breakfast",
+                menu: [],
+                price: {
+                    adult: 0,
+                    children: 0
+                }
+            },
+        },
+        lunch: {
+            standart: {
+                type: "standart lunch",
+                menu: ["soup", "garnish", "salad", "dessert", "drink"],
+                price: {
+                    adult: 10,
+                    children: 5
+                }
+            },
+            diet: {
+                type: "diet",
+                menu: ["bouillon", "cereals", "salad", "biscuits", "drink"],
+                price: {
+                    adult: 10,
+                    children: 5
+                }
+            },
+            unlimited: {
+                type: "unlimited",
+                menu: ["all inclusive"],
+                price: {
+                    adult: 15,
+                    children: 5
+                }
+            },
+            notEat: {
+                type: "no lunch",
+                menu: [],
+                price: {
+                    adult: 0,
+                    children: 0
+                }
+            },
+        },
+        dinner: {
+            standart: {
+                type: "standart dinner",
+                menu: ["soup", "garnish", "salad", "dessert", "drink"],
+                price: {
+                    adult: 10,
+                    children: 5
+                }
+            },
+            diet: {
+                type: "diet",
+                menu: ["bouillon", "cereals", "salad", "biscuits", "drink"],
+                price: {
+                    adult: 10,
+                    children: 5
+                }
+            },
+            unlimited: {
+                type: "unlimited",
+                menu: ["all inclusive"],
+                price: {
+                    adult: 15,
+                    children: 5
+                }
+            },
+            notEat: {
+                type: "no dinner",
+                menu: [],
+                price: {
+                    adult: 0,
+                    children: 0
+                }
+            },
+        },
+    },
+    priceForServices: {
+        tours: {
+            oldCity: {
+                type: "Old city",
+                duration: 2,
+                price: {
+                    adult: 20,
+                    children: 10
+                }
+            },
+            roomInTheOcean: {
+                type: "Room in the ocean",
+                duration: 1,
+                price: {
+                    adult: 20,
+                    children: 10
+                }
+            },
+            dolphinarium: {
+                type: "Dolphinarium",
+                duration: 1,
+                price: {
+                    adult: 20,
+                    children: 10
+                }
+            },
+            boatTrip: {
+                type: "Boat trip",
+                duration: 1,
+                price: {
+                    adult: 20,
+                    children: 10
+                }
+            },
+            safari: {
+                type: "Safari",
+                duration: 4,
+                price: {
+                    adult: 100,
+                    children: 50
+                }
+            },
+            diving: {
+                type: "Diving",
+                duration: 1,
+                price: {
+                    adult: 50,
+                    children: 20
+                }
+            }
+        }
+    },
+    costCalculation: {
+        people: {
+            adult: {
+                type: "Adult",
+                value: 2
+            },
+            children: {
+                type: "Children",
+                value: 0
+            }
+        },
+        apartaments: {
+            type: "Studio"
+        },
+        menu: {
+            breakfast: {
+                type: "unlimited"
+            },
+            lunch: {
+                type: "unlimited"
+            },
+            dinner: {
+                type: "unlimited"
+            }
+        },
+        services: [
+            {
+                type: "no services"
+            }
+        ]
+    },
+    cash: 0
 };
 
 export const partner1Reducer = (state, action) => {
@@ -75,7 +325,6 @@ export const partner1Reducer = (state, action) => {
     switch (action.type) {
 
         case "PARTNER_1_STATE_TEST_SAGA":
-            console.log('partner1 reducer test: ', state);
             return state;
         case "GET_CURRENT_MONTH_SAGA":
             return {
@@ -101,6 +350,16 @@ export const partner1Reducer = (state, action) => {
             return {
                 ...state,
                 startOfRestError: action.payload
+            };
+        case "GET_END_OF_REST_SAGA":
+            return {
+                ...state,
+                endOfRest: action.payload
+            };
+        case "GET_ALL_DAYS_OF_REST_SAGA":
+            return {
+                ...state,
+                allDays: action.payload
             };
 
         default:

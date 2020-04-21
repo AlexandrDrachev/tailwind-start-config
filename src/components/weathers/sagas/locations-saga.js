@@ -26,7 +26,6 @@ export function* watchCoordsFunc() {
     //     latAndLng.lng = 30.523494;
     // }
     const res = yield call(getCityFromCoords, latAndLng);
-    console.log(res);
     yield put(getNewLocationSaga(res));
 }
 

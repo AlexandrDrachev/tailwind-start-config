@@ -27,7 +27,10 @@ import {
     watchPartner1SagaTest,
     watcherGetStartOfRest,
     watcherPrevOrNextMonth,
-    watcherGetStartDateOfRest
+    watcherGetStartDateOfRest,
+    watcherGetEndDateOfRest,
+    watcherGetAllDaysOfRest,
+    watcherGetCostCalculation
 } from "../components/partners/partner1/partner1-saga";
 
 export function* rootSagas() {
@@ -48,7 +51,10 @@ export function* rootSagas() {
         watchPartner1SagaTest(),
         watcherGetStartOfRest(),
         watcherPrevOrNextMonth(),
-        watcherGetStartDateOfRest()
+        watcherGetStartDateOfRest(),
+        watcherGetEndDateOfRest(),
+        watcherGetAllDaysOfRest(),
+        watcherGetCostCalculation()
     ]);
 }
 

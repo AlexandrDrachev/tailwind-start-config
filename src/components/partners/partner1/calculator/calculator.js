@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import BgMask from '../../../bg-mask';
 import ModalMessage from '../../../modal-message';
+import CostCalculation from './cost-calculation';
 import {
     getNextStartMonthAction,
     getNextEndMonthAction,
@@ -10,7 +11,9 @@ import {
     getPrevEndMonthAction,
     getStartOfRestAction,
     getStartDateOfRestAction,
-    startOfRestErrorSaga
+    getEndDateOfRestAction,
+    startOfRestErrorSaga,
+    getAllDaysOfRestAction
 } from "../partner1-action";
 import ServiceApi from '../../../../services/service-api';
 // const _ = require("lodash");
@@ -20,7 +23,7 @@ class Calculator extends Component {
     state = {
         start: false,
         end: false,
-        error: false
+        costCalc: false
     };
 
     onStartTrue = () => {
@@ -44,12 +47,26 @@ class Calculator extends Component {
         this.props.getStartDateOfRestAction(date);
     };
 
+    onSelectEndDateOfRest = (date)  => {
+        this.props.getEndDateOfRestAction(date);
+    };
+
+    onToggleCostCalc = () => {
+        this.setState({
+            costCalc: true
+        });
+        this.props.getAllDaysOfRestAction();
+    };
+
     render() {
 
-        const { getPrevStartMonthAction, getNextStartMonthAction, getPrevEndMonthAction, getNextEndMonthAction,
-            startMonth, endMonth, startOfRest, endOfRest, startOfRestError, startOfRestErrorSaga } = this.props;
+        const {
+            getPrevStartMonthAction, getNextStartMonthAction,
+            getPrevEndMonthAction, getNextEndMonthAction,
+            startMonth, endMonth, startOfRest,
+            endOfRest, startOfRestError, startOfRestErrorSaga } = this.props;
 
-        const { start, end, error } = this.state;
+        const { start, end } = this.state;
 
         if (startOfRestError) {
             return <ModalMessage message={`INVALID DATE FORMAT!!!`} action={startOfRestErrorSaga}/>
@@ -57,45 +74,83 @@ class Calculator extends Component {
 
         return (
             <div className="p-2 flex flex-col justify-center items-center">
-                <div
-                    className="relative flex justify-center items-center p-2 border border-white rounded w-200 h-65">
+                {!this.state.costCalc ? <div>
                     <div
-                        className="z-20 cursor-pointer mx-2"
-                        onClick={() => this.onStartTrue()}>
-                        <div className="flex justify-center m-1">Start of rest</div>
-                        {startOfRest ?
-                            <div className="flex justify-center">
-                                <div className="m-1">{startOfRest.date}</div>
-                                <div className="m-1">{startOfRest.month}</div>
-                                <div className="m-1">{startOfRest.year}</div>
+                        className="
+                    w-500 mb:w-full flex justify-start
+                    mb:items-center mb:flex-col items-start">
+                        <div
+                            className="m-2 relative flex justify-center items-center p-2 border border-white rounded w-170 h-65">
+                            <div
+                                className="z-20 cursor-pointer mx-2"
+                                onClick={() => this.onStartTrue()}>
+                                <div className="flex justify-center m-1">Start of rest</div>
+                                {startOfRest ?
+                                    <div className="flex justify-center">
+                                        <div className="m-1">{startOfRest.date}</div>
+                                        <div className="m-1">{startOfRest.month}</div>
+                                        <div className="m-1">{startOfRest.year}</div>
+                                    </div> : null}
+                            </div>
+                            <BgMask />
+                        </div>
+                        <div>
+                            {startMonth && start ? <Month
+                                start={true}
+                                end={false}
+                                startOfRestError={startOfRestError}
+                                startOfRest={startOfRest}
+                                endOfRest={null}
+                                onSelectDate={this.onSelectStartDateOfRest}
+                                showMonth={this.onStartFalse}
+                                currentMonth={startMonth}
+                                getPrevMonthAction={getPrevStartMonthAction}
+                                getNextMonthAction={getNextStartMonthAction} /> : null}
+                        </div>
+                    </div>
+                    <div
+                        className="
+                    w-500 mb:w-full flex justify-start
+                    mb:items-center mb:flex-col items-start">
+                        <div className="m-2 relative flex justify-center items-center p-2 border border-white rounded w-170 h-65 mt-2">
+                            <div
+                                className="z-20 cursor-pointer mx-2"
+                                onClick={() => this.onEndTrue()}>
+                                <div className="flex justify-center m-1">End of rest</div>
+                                {endOfRest ?
+                                    <div className="flex justify-center">
+                                        <div className="m-1">{endOfRest.date}</div>
+                                        <div className="m-1">{endOfRest.month}</div>
+                                        <div className="m-1">{endOfRest.year}</div>
+                                    </div> : null}
+                            </div>
+                            <BgMask />
+                        </div>
+                        <div>
+                            {endMonth && end ? <Month
+                                start={false}
+                                end={true}
+                                startOfRest={null}
+                                endOfRest={endOfRest}
+                                startOfRestError={startOfRestError}
+                                onSelectDate={this.onSelectEndDateOfRest}
+                                showMonth={this.onEndFalse}
+                                currentMonth={endMonth}
+                                getPrevMonthAction={getPrevEndMonthAction}
+                                getNextMonthAction={getNextEndMonthAction} /> : null}
+                        </div>
+                    </div>
+                    <div className="w-full flex justify-center items-center">
+                        {startOfRest && endOfRest ?
+                            <div
+                                onClick={() => this.onToggleCostCalc()}
+                                className="z-20 w-300 mb:w-290 p-2 m-2 bg-green-600 rounded flex justify-center items-center
+                            hover:bg-green-700 cursor-pointer">
+                                Cost Calculation
                             </div> : null}
                     </div>
-                    <BgMask />
-                </div>
-                {startMonth && start ? <Month
-                    startOfRestError={startOfRestError}
-                    startOfRestErrorSaga={startOfRestErrorSaga}
-                    startOfRest={startOfRest}
-                    endOfRest={endOfRest}
-                    onSelectDate={this.onSelectStartDateOfRest}
-                    showMonth={this.onStartFalse}
-                    currentMonth={startMonth}
-                    getPrevMonthAction={getPrevStartMonthAction}
-                    getNextMonthAction={getNextStartMonthAction} /> : null}
-                <div
-                    className="relative flex justify-center items-center p-2 border border-white rounded w-200 h-65 mt-2">
-                    <div
-                        className="z-20 cursor-pointer mx-2"
-                        onClick={() => this.onEndTrue()}>
-                        End of rest
-                    </div>
-                    <BgMask />
-                </div>
-                {endMonth && end ? <Month
-                    showMonth={this.onEndFalse}
-                    currentMonth={endMonth}
-                    getPrevMonthAction={getPrevEndMonthAction}
-                    getNextMonthAction={getNextEndMonthAction} /> : null}
+                </div> : null}
+                {this.state.costCalc ? <CostCalculation /> : null}
             </div>
         );
     };
@@ -134,13 +189,8 @@ class Month extends Component {
 
     renderDaysFromMonth = () => {
 
-        const { currentMonth, onSelectDate, startOfRest, endOfRest, startOfRestError, startOfRestErrorSaga } = this.props;
-
-        console.log('is start of rest error: ', startOfRestError);
-
-        // if (startOfRestError) {
-        // return <ModalMessage message={`INVALID DATE FORMAT!!!`} action={startOfRestErrorSaga}/>
-        // }
+        const { currentMonth, onSelectDate, startOfRest,
+            endOfRest, start, end} = this.props;
 
         return Array(currentMonth.length + currentMonth[0].indexDay)
             .fill(null)
@@ -148,6 +198,8 @@ class Month extends Component {
                 const d = index - (currentMonth[0].indexDay - 1);
                 return d > 0 ?
                     <Day
+                        start={start}
+                        end={end}
                         startOfRest={startOfRest}
                         endOfRest={endOfRest}
                         currentMonth={currentMonth}
@@ -205,9 +257,15 @@ class Month extends Component {
     };
 }
 
-const Day = ({ currentMonth, date, isToday, onSelectDate, startOfRest, endOfRest }) => {
+const Day = ({ currentMonth, date, isToday, onSelectDate, startOfRest, endOfRest, start, end }) => {
 
-    const selectDate = {
+    const selectStartDate = {
+        year: new Date(currentMonth[0].year, currentMonth[0].indexMonth, date).getFullYear(),
+        month: new Date(currentMonth[0].year, currentMonth[0].indexMonth, date).getMonth(),
+        date: date
+    };
+
+    const selectEndDate = {
         year: new Date(currentMonth[0].year, currentMonth[0].indexMonth, date).getFullYear(),
         month: new Date(currentMonth[0].year, currentMonth[0].indexMonth, date).getMonth(),
         date: date
@@ -225,10 +283,23 @@ const Day = ({ currentMonth, date, isToday, onSelectDate, startOfRest, endOfRest
         return false;
     };
 
+    const isEndOfRest = () => {
+
+        if (!endOfRest) {
+            return false;
+        }
+        if (new Date(currentMonth[0].fullResult).getFullYear() === endOfRest.year &&
+            new Date(currentMonth[0].fullResult).getMonth() === endOfRest.indexMonth &&
+            date === endOfRest.date) {
+            return true;
+        }
+        return false;
+    };
+
     if (isToday) {
         return (
             <div
-                onClick={() => onSelectDate(selectDate)}
+                onClick={() => onSelectDate(start ? selectStartDate : selectEndDate)}
                 className={`
             w-8 h-8 text-yellow-500 font-bold rounded m-1 p-1 cursor-pointer
             border border-white flex flex-col justify-center items-center`}>
@@ -237,12 +308,24 @@ const Day = ({ currentMonth, date, isToday, onSelectDate, startOfRest, endOfRest
         );
     }
 
-    if (isStartOfRest()) {
+    if (isStartOfRest() && start) {
         return (
             <div
-                onClick={() => onSelectDate(selectDate)}
+                onClick={() => onSelectDate(start ? selectStartDate : selectEndDate)}
                 className={`
-            w-8 h-8 bg-green-600 font-bold rounded m-1 p-1 cursor-pointer
+            w-8 h-8 bg-green-700 font-bold rounded m-1 p-1 cursor-pointer
+            border border-white flex flex-col justify-center items-center`}>
+                {date}
+            </div>
+        );
+    }
+
+    if (isEndOfRest() && end) {
+        return (
+            <div
+                onClick={() => onSelectDate(start ? selectStartDate : selectEndDate)}
+                className={`
+            w-8 h-8 bg-red-600 font-bold rounded m-1 p-1 cursor-pointer
             border border-white flex flex-col justify-center items-center`}>
                 {date}
             </div>
@@ -251,7 +334,7 @@ const Day = ({ currentMonth, date, isToday, onSelectDate, startOfRest, endOfRest
 
     return (
         <div
-            onClick={() => onSelectDate(selectDate)}
+            onClick={() => onSelectDate(start ? selectStartDate : selectEndDate)}
             className={`w-8 h-8 rounded m-1 p-1 cursor-pointer border border-white flex flex-col justify-center items-center`}>
             {date}
         </div>
@@ -284,7 +367,9 @@ const mapDispatchToProps = {
     getNextEndMonthAction: getNextEndMonthAction,
     getPrevEndMonthAction: getPrevEndMonthAction,
     getStartDateOfRestAction: getStartDateOfRestAction,
-    startOfRestErrorSaga: startOfRestErrorSaga
+    startOfRestErrorSaga: startOfRestErrorSaga,
+    getEndDateOfRestAction: getEndDateOfRestAction,
+    getAllDaysOfRestAction: getAllDaysOfRestAction
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calculator);

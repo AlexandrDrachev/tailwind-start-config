@@ -40,13 +40,6 @@ export const getStartOfRestAction = (date) => {
     };
 };
 
-// export const getStartOfRestSaga = (date) => {
-//     return {
-//         type: "GET_START_OF_REST_SAGA",
-//         payload: date
-//     };
-// };
-
 export const getPrevStartMonthAction = () => {
     return {
         type: "GET_PREV_START_MONTH_ACTION"
@@ -78,6 +71,13 @@ export const getStartDateOfRestAction = (date) => {
     };
 };
 
+export const getEndDateOfRestAction = (date) => {
+    return {
+        type: "GET_END_DATE_OF_REST_ACTION",
+        payload: date
+    };
+};
+
 export const getStartOfRestSaga = (dateObj) => {
     return {
         type: "GET_START_OF_REST_SAGA",
@@ -89,5 +89,35 @@ export const startOfRestErrorSaga = (bool) => {
     return {
         type: "START_OF_REST_ERROR_SAGA",
         payload: bool
+    };
+};
+
+export const getEndOfRestSaga = (dateObj) => {
+    return {
+        type: "GET_END_OF_REST_SAGA",
+        payload: dateObj
+    };
+};
+
+export const getAllDaysOfRestAction = () => {
+    return {
+        type: "GET_ALL_DAYS_OF_REST_ACTION"
+    };
+};
+
+export const getAllDaysOfRestSaga = (allDays) => {
+    return {
+        type: "GET_ALL_DAYS_OF_REST_SAGA",
+        payload: allDays
+    };
+};
+
+export const getCostCalculationAction = (people, apartaments, menu, services) => {
+    return {
+        type: "GET_COST_CALCULATION_ACTION",
+        people: people,
+        apartaments: apartaments,
+        menu: menu,
+        services: services
     };
 };

@@ -1167,6 +1167,10 @@ video {
   background-color: #38a169;
 }
 
+.hover\:bg-green-700:hover {
+  background-color: #2f855a;
+}
+
 .hover\:bg-blue-600:hover {
   background-color: #3182ce;
 }
@@ -5361,8 +5365,16 @@ video {
   width: 16rem;
 }
 
+.w-136 {
+  width: 136px;
+}
+
 .w-150 {
   width: 150px;
+}
+
+.w-170 {
+  width: 170px;
 }
 
 .w-200 {
@@ -6828,6 +6840,10 @@ video {
 
   .mb\:text-xs {
     font-size: 0.75rem;
+  }
+
+  .mb\:w-290 {
+    width: 290px;
   }
 
   .mb\:w-300 {
