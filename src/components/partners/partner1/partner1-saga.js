@@ -8,7 +8,8 @@ import {
     getStartOfRestSaga,
     startOfRestErrorSaga,
     getEndOfRestSaga,
-    getAllDaysOfRestSaga
+    getAllDaysOfRestSaga,
+    getCostCalculationSaga
 } from './partner1-action';
 import ServiceApi from '../../../services/service-api';
 const _ = require("lodash");
@@ -328,6 +329,7 @@ function* workerGetCostCalculation({ people, apartaments, menu, services }) {
     let currentBreakfast;
     let currentLunch;
     let currentDinner;
+    let currentServices;
     for (let key in priceForApartaments) {
         if (priceForApartaments[key].type === apartaments.type) {
             currentApartaments = priceForApartaments[key];
@@ -360,10 +362,27 @@ function* workerGetCostCalculation({ people, apartaments, menu, services }) {
     costOfDinner = (currentDinner.price.adult * people.adult.value) +
         (currentDinner.price.children * people.children.value);
 
+    let costOfServicesArr = services.map((service) => {
+        let sum = 0;
+        for (let key in priceForServices.tours) {
+            if (priceForServices.tours[key].type === service.type) {
+                sum += ((priceForServices.tours[key].price.adult * people.adult.value) +
+                    (priceForServices.tours[key].price.children * people.children.value))
+            }
+        }
+        console.log('sum services cash:', sum);
+        return sum;
+    });
+
+    costOfServices = costOfServicesArr.reduce((a, b) => a + b, 0);
+
+    console.log('sum costOfServices cash:', costOfServices);
+
     const allDays = yield select((state) => state.partner1State.allDays);
 
-    let sumCash = (costOfApartaments + costOfBreakfast + costOfLunch + costOfDinner + costOfServices) * allDays;
+    let sumCash = ((costOfApartaments + costOfBreakfast + costOfLunch + costOfDinner ) * allDays)+ costOfServices;
 
+    yield put(getCostCalculationSaga(newCostCalculation, sumCash));
 
 
 

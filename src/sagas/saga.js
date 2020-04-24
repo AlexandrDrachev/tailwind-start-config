@@ -20,6 +20,7 @@ import {
 import {
     watchGetAutorisation,
     watchGetRegistration,
+    watcherRegistrationNewUser,
     watchAutorisationQuest
 } from "../components/autorisation/autorisation-saga";
 
@@ -44,6 +45,7 @@ export function* rootSagas() {
         watchUpdateWeatherForcast(),
         watchGetAutorisation(),
         watchGetRegistration(),
+        watcherRegistrationNewUser(),
         watchAutorisationQuest(),
         watchGetCountriesFromSelect(),
         watchGetStatesFromSelect(),

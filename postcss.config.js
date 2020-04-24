@@ -23,8 +23,13 @@ const purgecss = require('@fullhuman/postcss-purgecss')({
         './src/components/partners/partner1/apartaments/apartaments.js',
         './src/components/partners/partner1/contacts/contacts.js',
         './src/components/partners/partner1/calculator/calculator.js',
+        './src/components/partners/partner1/calculator/cost-calculation/cost-calculation.js',
+        './src/components/partners/partner1/calculator/finaly-result-cash/finaly-result-cash.js',
+        './src/components/partners/partner1/gallery/gallery.js',
         './src/components/partners/partner2/partner2.js',
-        './src/components/partners/partner3/partner3.js'
+        './src/components/partners/partner3/partner3.js',
+        './src/components/partners/partner3/messanger/messanger.js',
+        './src/components/partners/partner3/users-list/users-list.js',
     ],
 
     // Include any special characters you're using in this regular expression

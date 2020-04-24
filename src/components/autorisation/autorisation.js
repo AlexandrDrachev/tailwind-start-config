@@ -62,7 +62,6 @@ class Autorisation extends Component {
     };
 
     getLogin = () => {
-        console.log('state: ', this.state);
         this.autorisationObj.userName = this.state.userName;
         this.autorisationObj.userNameReg = this.state.userNameReg;
         this.autorisationObj.password = this.state.password;
@@ -70,6 +69,7 @@ class Autorisation extends Component {
         this.autorisationObj.repeatPassword = this.state.repeatPassword;
         this.autorisationObj.autorisation = this.props.autorisation;
         this.autorisationObj.registration = this.props.registration;
+        this.autorisationObj.avatar = "";
         if (!this.props.autorisation && !this.props.registration) {
             return this.props.getAutorisationAction(this.autorisationObj);
         }

@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import BgMask from '../../../../bg-mask';
+import FinalyResultCash from '../finaly-result-cash';
 import { getCostCalculationAction } from '../../partner1-action';
+
+const _ = require("lodash");
 
 class CostCalculation extends Component {
 
@@ -10,7 +13,8 @@ class CostCalculation extends Component {
         people: JSON.parse(JSON.stringify(this.props.costCalculation.people)),
         apartaments: JSON.parse(JSON.stringify(this.props.costCalculation.apartaments)),
         menu: JSON.parse(JSON.stringify(this.props.costCalculation.menu)),
-        services: JSON.parse(JSON.stringify(this.props.costCalculation.services))
+        services: JSON.parse(JSON.stringify(this.props.costCalculation.services)),
+        costResult: false
     };
 
     renderSelectApartaments = (apartaments) => {
@@ -23,7 +27,7 @@ class CostCalculation extends Component {
                 <div key={item.type}>
                     <label className="w-full flex justify-center items-center">
                         <input
-                            value={item.type}
+                            value={JSON.stringify({type: item.type})}
                             defaultChecked={item.type === "Studio"}
                             type="radio"
                             name="apartaments"
@@ -70,7 +74,7 @@ class CostCalculation extends Component {
                             //         ((people.adult * item.price.adult) + (people.children * item.price.children)) :
                             //         (people.adult * item.price.adult)
                             // })}
-                            value={item.type}
+                            value={JSON.stringify({type: item.type})}
                             defaultChecked={item.type === "unlimited"}
                             name="menu"/>
                         <div className={
@@ -116,13 +120,7 @@ class CostCalculation extends Component {
                         <input
                             className="cursor-pointer"
                             name="services"
-                            // value={{
-                            //     price: people.children > 0 ?
-                            //     ((people.adult * serv.price.adult) + (people.children * serv.price.children)) :
-                            //     (people.adult * serv.price.adult),
-                            //     type: serv.type
-                            // }}
-                            value={serv.type}
+                            value={JSON.stringify({type: serv.type})}
                             type="checkbox"/>
                         <div className="w-full flex flex-col justify-center items-center border-b border-white">
                             <div className="w-full flex justify-center">
@@ -143,16 +141,33 @@ class CostCalculation extends Component {
         });
     };
 
+    onToggleCostResult = () => {
+        this.setState({costResult: true});
+    };
+
+    getCalculation = () => {
+        this.props.getCostCalculationAction(this.state.people,
+            this.state.apartaments, this.state.menu, this.state.services);
+        this.onToggleCostResult();
+    };
+
+    onChangeAddedServices = (e) => {
+        let newServices = [];
+        newServices = JSON.parse(JSON.stringify(this.state.services));
+        if (!e.target.checked) {
+            newServices = newServices.filter((item) => item.type !== JSON.parse(e.target.value).type.toString());
+            return this.setState({services: newServices});
+        }
+        newServices.push(JSON.parse(e.target.value));
+        this.setState({services: newServices});
+    };
+
     render() {
 
         const { startOfRest, endOfRest, people, priceForApartaments,
             priceForMenu, priceForServices, costCalculation, allDays } = this.props;
 
-        console.log('this state:', this.state);
-        console.log('this props:', this.props.costCalculation);
-
-        return (
-            <div
+        return !this.state.costResult ? <div
                 className="relative w-500 mb:w-300 p-2 flex flex-col justify-center items-center border border-white rounded">
                 <div className="z-20 m-1 border-b border-white w-300 mb:w-full">
                     <div className="flex w-full justify-center font-fredokaOne">
@@ -255,7 +270,7 @@ class CostCalculation extends Component {
                         Select Apartaments
                     </div>
                     <form
-                        onChange={(e) => this.setState({apartaments: e.target.value})}>
+                        onChange={(e) => this.setState({apartaments: JSON.parse(e.target.value)})}>
                         {this.renderSelectApartaments(priceForApartaments)}
                     </form>
                 </div>
@@ -273,7 +288,7 @@ class CostCalculation extends Component {
                                     this.setState({
                                         menu: {
                                             ...this.state.menu,
-                                            breakfast: e.target.value
+                                            breakfast: JSON.parse(e.target.value)
                                         }
                                     })}>
                                 {this.renderSelectMenu(priceForMenu.breakfast)}
@@ -290,7 +305,7 @@ class CostCalculation extends Component {
                                 this.setState({
                                     menu: {
                                         ...this.state.menu,
-                                        lunch: e.target.value
+                                        lunch: JSON.parse(e.target.value)
                                     }
                                 })}>
                                 {this.renderSelectMenu(priceForMenu.lunch)}
@@ -306,7 +321,7 @@ class CostCalculation extends Component {
                                 this.setState({
                                     menu: {
                                         ...this.state.menu,
-                                        dinner: e.target.value
+                                        dinner: JSON.parse(e.target.value)
                                     }
                                 })}>
                                 {this.renderSelectMenu(priceForMenu.dinner)}
@@ -318,20 +333,19 @@ class CostCalculation extends Component {
                     <div className="flex w-full justify-center font-fredokaOne">
                         Select Services
                     </div>
-                    <form>
+                    <form
+                        onChange={(e) => this.onChangeAddedServices(e)}>
                         {this.renderSelectServices(priceForServices.tours)}
                     </form>
                 </div>
                 <div
-                    onClick={() =>
-                        this.props.getCostCalculationAction(this.state.people, this.state.apartaments, this.state.menu, this.state.services)}
+                    onClick={() => this.getCalculation()}
                     className="z-20 w-300 mb:w-290 p-2 m-2 bg-green-600 rounded flex justify-center items-center
                      hover:bg-green-700 cursor-pointer">
                     Cost Calculation
                 </div>
                 <BgMask />
-            </div>
-        );
+            </div> : <FinalyResultCash/>
     };
 }
 

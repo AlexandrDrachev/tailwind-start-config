@@ -93,36 +93,36 @@ export const initialPartner1State = {
         deluxeBalconyStudio: {
             type: "Deluxe Balcony Studio",
             price: {
-                adult: 110,
-                children: 50,
+                adult: 55,
+                children: 25,
             }
         },
         studio: {
             type: "Studio",
             price: {
-                adult: 100,
-                children: 40,
+                adult: 50,
+                children: 20,
             }
         },
         poolSideMaisonette: {
             type: "Pool Side Maisonette",
             price: {
-                adult: 120,
-                children: 60,
+                adult: 60,
+                children: 30,
             }
         },
         gardenViewMaisonette: {
             type: "Garden View Maisonette",
             price: {
-                adult: 130,
-                children: 60,
+                adult: 65,
+                children: 30,
             }
         },
         twoRoomApartment: {
             type: "Two Room Apartment",
             price: {
-                adult: 150,
-                children: 70,
+                adult: 75,
+                children: 35,
             }
         },
     },
@@ -132,24 +132,24 @@ export const initialPartner1State = {
                 type: "standart breakfast",
                 menu: ["soup", "garnish", "salad", "dessert", "drink"],
                 price: {
-                    adult: 10,
-                    children: 5
+                    adult: 5,
+                    children: 2
                 }
             },
             diet: {
                 type: "diet",
                 menu: ["bouillon", "cereals", "salad", "biscuits", "drink"],
                 price: {
-                    adult: 10,
-                    children: 5
+                    adult: 5,
+                    children: 2
                 }
             },
             unlimited: {
                 type: "unlimited",
                 menu: ["all inclusive"],
                 price: {
-                    adult: 15,
-                    children: 5
+                    adult: 7,
+                    children: 2
                 }
             },
             notEat: {
@@ -166,24 +166,24 @@ export const initialPartner1State = {
                 type: "standart lunch",
                 menu: ["soup", "garnish", "salad", "dessert", "drink"],
                 price: {
-                    adult: 10,
-                    children: 5
+                    adult: 5,
+                    children: 2
                 }
             },
             diet: {
                 type: "diet",
                 menu: ["bouillon", "cereals", "salad", "biscuits", "drink"],
                 price: {
-                    adult: 10,
-                    children: 5
+                    adult: 5,
+                    children: 2
                 }
             },
             unlimited: {
                 type: "unlimited",
                 menu: ["all inclusive"],
                 price: {
-                    adult: 15,
-                    children: 5
+                    adult: 7,
+                    children: 2
                 }
             },
             notEat: {
@@ -200,24 +200,24 @@ export const initialPartner1State = {
                 type: "standart dinner",
                 menu: ["soup", "garnish", "salad", "dessert", "drink"],
                 price: {
-                    adult: 10,
-                    children: 5
+                    adult: 5,
+                    children: 2
                 }
             },
             diet: {
                 type: "diet",
                 menu: ["bouillon", "cereals", "salad", "biscuits", "drink"],
                 price: {
-                    adult: 10,
-                    children: 5
+                    adult: 5,
+                    children: 2
                 }
             },
             unlimited: {
                 type: "unlimited",
                 menu: ["all inclusive"],
                 price: {
-                    adult: 15,
-                    children: 5
+                    adult: 7,
+                    children: 2
                 }
             },
             notEat: {
@@ -360,6 +360,12 @@ export const partner1Reducer = (state, action) => {
             return {
                 ...state,
                 allDays: action.payload
+            };
+        case "GET_COST_CALCULATION_SAGA":
+            return {
+                ...state,
+                costCalculation: action.costCalculation,
+                cash: action.cash
             };
 
         default:

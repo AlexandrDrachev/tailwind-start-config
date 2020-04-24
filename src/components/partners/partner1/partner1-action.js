@@ -121,3 +121,11 @@ export const getCostCalculationAction = (people, apartaments, menu, services) =>
         services: services
     };
 };
+
+export const getCostCalculationSaga = (costCalculation, cash) => {
+    return {
+        type: "GET_COST_CALCULATION_SAGA",
+        costCalculation: costCalculation,
+        cash: cash
+    };
+};

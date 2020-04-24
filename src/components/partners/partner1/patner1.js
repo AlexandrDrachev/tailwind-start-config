@@ -7,7 +7,8 @@ import { partner1StateTestAction } from "./partner1-action";
 import Home from './home';
 import Apartaments from './apartaments';
 import Contacts from './contacts';
-import Calculator from './calculator'
+import Calculator from './calculator';
+import Gallery from './gallery';
 
 class Partner1 extends Component {
 
@@ -115,6 +116,7 @@ class Partner1 extends Component {
                 </div>
                 { this.state.home ? <Home /> : null }
                 { this.state.apartaments ? <Apartaments /> : null }
+                { this.state.gallery ? <Gallery /> : null }
                 { this.state.contacts ? <Contacts /> : null }
                 { this.state.calculator ? <Calculator /> : null }
             </div>
