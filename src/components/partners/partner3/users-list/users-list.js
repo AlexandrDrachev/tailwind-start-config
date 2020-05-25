@@ -25,12 +25,11 @@ class UsersList extends Component {
     render() {
 
         const { users, getPartner3StateTest } = this.props;
-        console.log(users);
 
         return (
             <div>
                 <div className="
-                relative w-full p-2 flex flex-col text-white
+                relative w-full p-2 mt-2 flex flex-col text-white
                 justify-center items-center border border-white rounded">
                     <div
                         onClick={() => getPartner3StateTest()}

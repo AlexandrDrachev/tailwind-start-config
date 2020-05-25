@@ -34,6 +34,8 @@ import {
     watcherGetCostCalculation
 } from "../components/partners/partner1/partner1-saga";
 
+import { watcherGetNewMessage, watcherGetActiveChat } from '../components/partners/partner3/partner3-saga';
+
 export function* rootSagas() {
     yield all([
         watchCoordsFunc(),
@@ -56,7 +58,9 @@ export function* rootSagas() {
         watcherGetStartDateOfRest(),
         watcherGetEndDateOfRest(),
         watcherGetAllDaysOfRest(),
-        watcherGetCostCalculation()
+        watcherGetCostCalculation(),
+        watcherGetNewMessage(),
+        watcherGetActiveChat()
     ]);
 }
 

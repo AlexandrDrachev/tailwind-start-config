@@ -16,7 +16,7 @@ class Partners extends Component {
                     items-center border border-white rounded">
                             <BgMask />
                             <div className="z-20 flex flex-col justify-center items-center">
-                                <div>Partner 1</div>
+                                <div>Holidays in Greece</div>
                                 <div className="text-base">component is still in development...</div>
                             </div>
                         </div>
@@ -35,7 +35,7 @@ class Partners extends Component {
                         <div className="relative font-fredokaOne flex justify-center w-300 h-300 text-4xl
                         items-center border border-white rounded">
                             <div className="z-20 flex flex-col justify-center items-center">
-                                <div>Partner 3</div>
+                                <div>Messanger</div>
                                 <div className="text-base">component is still in development...</div>
                             </div>
                             <BgMask />

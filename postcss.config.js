@@ -29,7 +29,9 @@ const purgecss = require('@fullhuman/postcss-purgecss')({
         './src/components/partners/partner2/partner2.js',
         './src/components/partners/partner3/partner3.js',
         './src/components/partners/partner3/messanger/messanger.js',
+        './src/components/partners/partner3/messanger-modal-options/messanger-modal-options.js',
         './src/components/partners/partner3/users-list/users-list.js',
+        './src/components/partners/partner3/chat-list/chat-list.js',
     ],
 
     // Include any special characters you're using in this regular expression

@@ -94,7 +94,7 @@ class Partner1 extends Component {
                     <div className="z-20 flex flex-col items-center w-full">
                         <div
                             onClick={() => this.props.partner1StateTestAction()}
-                            className="w-full flex justify-center">Partner1</div>
+                            className="w-full flex justify-center">Holidays in Greece</div>
                         <div className="w-full flex justify-around mb:flex-wrap">
                             <div
                                 onClick={() => this.onToggleHome()}

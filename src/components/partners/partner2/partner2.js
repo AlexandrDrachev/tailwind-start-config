@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import List from './test-scroll/test-scroll';
+
 class Partner2 extends Component {
 
     state = {
@@ -100,117 +102,121 @@ class Partner2 extends Component {
         const { home, events, wishlist, friends, stores, blogs } = this.state;
 
         return (
-            <div
-                className={`
-                flex flex-col justify-center items-center w-350 h-500 bg-white`}>
+            <div>
                 <div
                     className={`
-                    flex flex-col items-center justify-center bg-red-600 w-290 text-white`}>
+                flex flex-col justify-center items-center w-350 h-500 bg-white`}>
+                    TEST HTML/CSS COMPONENT
                     <div
                         className={`
+                    flex flex-col items-center justify-center bg-red-600 w-290 text-white`}>
+                        <div
+                            className={`
                         relative w-300 h-40p flex`}>
-                        <div
-                            className={`
+                            <div
+                                className={`
                             p-2 w-96 absolute left-0 top-0 right-0 bottom-0 font-bold`}>
-                            Logo
-                        </div>
-                        <div
-                            className={`
+                                Logo
+                            </div>
+                            <div
+                                className={`
                             ${home ? `rounded-br-lg bg-white text-gray-600` : null}
                             absolute p-2 left-96 top-0 right-0 bottom-0 w-204 rounded-tr-lg bg-red-600 `}>
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        className={`
-                        relative w-300 h-40p`}>
                         <div
-                            onClick={() => this.onToggleHome()}
                             className={`
+                        relative w-300 h-40p`}>
+                            <div
+                                onClick={() => this.onToggleHome()}
+                                className={`
                             ${!home ? `bg-red-600` : `rounded-l-full bg-white text-red-600 font-bold`}
                             ${events ? `rounded-br-lg` : null}
                             absolute p-2 left-24 top-0 right-0 bottom-0 w-204 cursor-pointer`}>
-                            Home
+                                Home
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        className={`
-                        relative w-300 h-40p`}>
                         <div
-                            onClick={() => this.onToggleEvents()}
                             className={`
+                        relative w-300 h-40p`}>
+                            <div
+                                onClick={() => this.onToggleEvents()}
+                                className={`
                             ${home ? `rounded-tr-lg` : null}
                             ${wishlist ? `rounded-br-lg` : null}
                             ${!events ? `bg-red-600` : `rounded-l-full bg-white text-red-600 font-bold`}
                             absolute p-2 left-24 top-0 right-0 bottom-0 w-204 cursor-pointer`}>
-                            Events
+                                Events
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        className={`
-                        relative w-300 h-40p`}>
                         <div
-                            onClick={() => this.onToggleWishlist()}
                             className={`
+                        relative w-300 h-40p`}>
+                            <div
+                                onClick={() => this.onToggleWishlist()}
+                                className={`
                             ${events ? `rounded-tr-lg` : null}
                             ${friends ? `rounded-br-lg` : null}
                             ${!wishlist ? `bg-red-600` : `rounded-l-full bg-white text-red-600 font-bold`}
                             absolute p-2 left-24 top-0 right-0 bottom-0 w-204 cursor-pointer`}>
-                            Wishlist
+                                Wishlist
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        className={`
-                        relative w-300 h-40p`}>
                         <div
-                            onClick={() => this.onToggleFriends()}
                             className={`
+                        relative w-300 h-40p`}>
+                            <div
+                                onClick={() => this.onToggleFriends()}
+                                className={`
                             ${wishlist ? `rounded-tr-lg` : null}
                             ${stores ? `rounded-br-lg` : null}
                             ${!friends ? `bg-red-600` : `rounded-l-full bg-white text-red-600 font-bold`}
                             absolute p-2 left-24 top-0 right-0 bottom-0 w-204 cursor-pointer`}>
-                            Friends
+                                Friends
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        className={`
-                        relative w-300 h-40p`}>
                         <div
-                            onClick={() => this.onToggleStores()}
                             className={`
+                        relative w-300 h-40p`}>
+                            <div
+                                onClick={() => this.onToggleStores()}
+                                className={`
                             ${friends ? `rounded-tr-lg` : null}
                             ${blogs ? `rounded-br-lg` : null}
                             ${!stores ? `bg-red-600` : `rounded-l-full bg-white text-red-600 font-bold`}
                             absolute p-2 left-24 top-0 right-0 bottom-0 w-204 cursor-pointer`}>
-                            Stores
+                                Stores
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        className={`
-                        relative w-300 h-40p`}>
                         <div
-                            onClick={() => this.onToggleBlogs()}
                             className={`
+                        relative w-300 h-40p`}>
+                            <div
+                                onClick={() => this.onToggleBlogs()}
+                                className={`
                             ${stores ? `rounded-tr-lg` : null}
                             ${!blogs ? `bg-red-600` : `rounded-l-full bg-white text-red-600 font-bold`}
                             absolute p-2 left-24 top-0 right-0 bottom-0 w-204 cursor-pointer`}>
-                            Blogs
+                                Blogs
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        className={`
+                        <div
+                            className={`
                         relative w-300 h-40p flex`}>
-                        <div
-                            className={`
+                            <div
+                                className={`
                             p-2 w-96 absolute left-0 top-0 right-0 bottom-0 font-bold`}>
-                            Footer
-                        </div>
-                        <div
-                            className={`
+                                Footer
+                            </div>
+                            <div
+                                className={`
                             bg-red-600 ${blogs ? `rounded-tr-lg bg-white text-gray-600` : null}
                             absolute p-2 left-96 top-0 right-0 bottom-0 w-204 rounded-br-lg`}>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <List />
             </div>
         );
     };
