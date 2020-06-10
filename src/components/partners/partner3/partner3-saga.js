@@ -12,7 +12,8 @@ export function* watcherGetNewMessage() {
 }
 
 function* workerAddedNewMessageInState(payload) {
-    const messages = yield select((state => state.partner3State.messages));
+    console.log(payload);
+    const messages = yield select((state => state.partner3State.activeChat.messages));
     yield put(addedNewMessageInStateSaga([...messages, payload]));
 }
 

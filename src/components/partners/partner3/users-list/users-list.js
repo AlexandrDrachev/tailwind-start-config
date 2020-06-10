@@ -36,7 +36,7 @@ class UsersList extends Component {
                         className="z-20">
                         Fast Authorization
                     </div>
-                    <div className="z-20 w-full flex justify-around mb:flex-wrap">
+                    <div className="z-20 w-full flex justify-around flex-wrap">
                         {users.map((user) => {
                             return (
                                 <div
@@ -44,7 +44,8 @@ class UsersList extends Component {
                                     key={user.id}
                                     className="mx-1 mb:my-1 mb:text-sm flex flex-col justify-center items-center cursor-pointer">
                                     {user.avatar === "" ? this.getAvatar(user.userName) : <img
-                                        className="w-20 h-20 mb:w-10 mb:h-10 rounded-full"
+                                        className="w-20 h-20 mb:w-10 mb:h-10 rounded-full text-2xl
+                                        bg-red-500 flex justify-center items-center"
                                         alt=""
                                         src={user.avatar} />}
                                     <div>

@@ -18,7 +18,10 @@ class ChatList extends Component {
                     {chat.chatName === "General chat" ?
                         <div className="w-10 h-10 mr-2 border border-gray-900 rounded-full">
 
-                        </div> : null}
+                        </div> :
+                        <div className="w-10 h-10 mr-2 border border-gray-900 rounded-full">
+                            <img alt="" src={chat.chatAvatar} />
+                        </div>}
                     <div>{chat.chatName}</div>
                 </div>
             );

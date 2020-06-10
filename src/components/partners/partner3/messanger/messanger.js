@@ -84,14 +84,14 @@ class Messanger extends Component {
     };
 
     onToggleOptions = (idx) => {
+        console.log('idx message: ', idx);
+        localStorage.setItem("indexMessage", idx);
         this.setState({
-            options: !this.state.options,
-            indexMessage: idx
+            options: !this.state.options
         });
     };
 
-    onGetMessageAddressId = (idx) => {
-        localStorage.setItem("indexMessage", idx);
+    onGetMessageAddressId = () => {
         return this.setState({message: {
                 ...this.state.message
             }});
@@ -204,8 +204,6 @@ class Messanger extends Component {
     };
 
     render() {
-
-        console.log('activeChat: ', this.props.activeChat);
 
         return (
             <div className="

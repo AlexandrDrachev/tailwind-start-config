@@ -42,6 +42,17 @@ export const initialPartner3State = {
             chatAvatar: "",
             messages: [
                 {
+                    messageId: 1,
+                    messageAuthorName: 'John',
+                    messageAuthorAvatar: "https://randomuser.me/api/portraits/men/69.jpg",
+                    messageText: "I’m assuming that you know basic JavaScript and that you’ve encountered " +
+                        "a little bit of React.js before. Other than that, there are no prerequisites",
+                    date: '20 April 2020',
+                    time: '18:22',
+                    messageAddressId: null
+
+                },
+                {
                     messageId: 2,
                     messageAuthorName: 'Camille',
                     messageAuthorAvatar: "https://randomuser.me/api/portraits/women/14.jpg",
@@ -87,7 +98,10 @@ export const partner3Reducer = (state, action) => {
         case "ADDED_NEW_MESSAGE_IN_STATE_SAGA":
             return {
                 ...state,
-                messages: action.payload
+                activeChat: {
+                    ...state.activeChat,
+                    messages: action.payload
+                },
             };
         case "GET_ACTIVE_CHAT_SAGA":
             return {

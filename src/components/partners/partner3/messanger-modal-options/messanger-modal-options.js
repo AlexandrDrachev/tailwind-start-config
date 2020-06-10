@@ -6,10 +6,11 @@ class MessangerModalOptions extends Component {
 
     render() {
 
+        const idx = localStorage.getItem("indexMessage");
+
         const { item1, item1Action, item2, item2Action, item3, item3Action, item4, item4Action } = this.props;
 
-        const idx = localStorage.getItem("indexMessage");
-        console.log('indexMessage in localStorage: ', idx);
+        console.log('idxMessageModal: ', idx);
 
         return (
             <div
@@ -53,6 +54,7 @@ class MessangerModalOptions extends Component {
                 </div>
             </div>
         );
+
     };
 }
 
