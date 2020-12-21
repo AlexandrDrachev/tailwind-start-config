@@ -7,7 +7,7 @@ import ServiceApi from "../../../services/service-api";
 
 const serviceApi = new ServiceApi();
 const { getCityCoords, getCityFromCoords, getWeatherCityFromCoords,
-    getWeatherForcast, getSelectCountry, getRapidLocation } = serviceApi;
+    getWeatherForcast, getSelectCountry, getRapidLocation, getSelectState, getSelectCity } = serviceApi;
 
 export function* watchCoordsFunc() {
     let latAndLng = {
@@ -34,6 +34,7 @@ export function* watchGetCountriesFromSelect() {
     while (true) {
         yield take("GET_SELECT_COUNTRY_ACTION");
         let countries = yield call(getSelectCountry);
+        // const countries = countriesRes.map((country) => country.name);
         yield put(getSelectCountrySaga(countries));
     }
 }
@@ -41,7 +42,9 @@ export function* watchGetCountriesFromSelect() {
 export function* watchGetStatesFromSelect() {
     while (true) {
         const { payload } = yield take("GET_SELECT_STATES_ACTION");
-        const states = yield call(getRapidLocation, payload);
+        // const states = yield call(getRapidLocation, payload);
+        const states = yield call(getSelectState, payload);
+        console.log('states: ', states);
         yield put(getSelectStateSaga(states));
     }
 }
@@ -49,7 +52,8 @@ export function* watchGetStatesFromSelect() {
 export function* watchGetCitiesFromSelect() {
     while (true) {
         const { payload } = yield take("GET_SELECT_CITIES_ACTION");
-        yield put(getSelectCitiesSaga(payload));
+        const cities = yield call(getSelectCity, payload);
+        yield put(getSelectCitiesSaga(cities));
 
     }
 }
@@ -58,7 +62,7 @@ export function* watchGetCitiesFromSelect() {
 export function* watchNewLocation() {
     while (true) {
         const { payload } = yield take("GET_NEW_LOCATION");
-        yield call(workerGetNewCity, payload.city);
+        yield call(workerGetNewCity, payload);
     }
 }
 

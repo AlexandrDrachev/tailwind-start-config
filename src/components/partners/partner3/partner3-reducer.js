@@ -95,7 +95,7 @@ export const partner3Reducer = (state, action) => {
         case "GET_PARTNER3_STATE_TEST":
             return state;
 
-        case "ADDED_NEW_MESSAGE_IN_STATE_SAGA":
+        case "ADDED_NEW_MESSAGE_IN_ACTIVE_CHAT_SAGA":
             return {
                 ...state,
                 activeChat: {
@@ -107,6 +107,18 @@ export const partner3Reducer = (state, action) => {
             return {
                 ...state,
                 activeChat: action.payload
+            };
+        case "UPDATE_MESSAGES_IN_CHATS_SAGA":
+            return {
+                ...state,
+                chats: [
+                    ...state.chats,
+                    state.chats[action.index] =
+                        {
+                            ...state.chats[action.index],
+                            messages: action.payload
+                        }
+                ]
             };
 
         default:

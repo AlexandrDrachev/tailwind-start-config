@@ -1,6 +1,6 @@
 import { take, call, put, select } from 'redux-saga/effects';
 
-import { addedNewMessageInStateSaga, getActiveChatSaga } from './partner3-action';
+import { addedNewMessageInActiveChatSaga, getActiveChatSaga, updateMessagesInChatsSaga } from './partner3-action';
 
 export function* watcherGetNewMessage() {
     while (true) {
@@ -12,9 +12,13 @@ export function* watcherGetNewMessage() {
 }
 
 function* workerAddedNewMessageInState(payload) {
-    console.log(payload);
     const messages = yield select((state => state.partner3State.activeChat.messages));
-    yield put(addedNewMessageInStateSaga([...messages, payload]));
+    yield put(addedNewMessageInActiveChatSaga([...messages, payload]));
+    const activeChat = yield select((state) => state.partner3State.activeChat);
+    const chats = yield select((state) => state.partner3State.chats);
+    const indexActiveChat = chats.findIndex((chat) => chat.chatId === activeChat.chatId);
+    yield put(updateMessagesInChatsSaga(indexActiveChat, activeChat));
+    console.log(yield select((state) => state.partner3State.chats[indexActiveChat]));
 }
 
 export function* watcherGetActiveChat() {

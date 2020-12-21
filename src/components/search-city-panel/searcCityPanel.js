@@ -21,8 +21,8 @@ class SearchCityPanel extends Component {
     renderCountries = () => {
         return this.props.selectCountry.map((country) => {
             return {
-                label: country,
-                value: country
+                label: country.name,
+                value: country.id
             };
         });
     };
@@ -30,8 +30,8 @@ class SearchCityPanel extends Component {
     renderStates = () => {
         return this.props.selectState.map((state) => {
             return {
-                label: state[0].state,
-                value: state
+                label: state.name,
+                value: state.id
             };
         });
     };
@@ -39,8 +39,8 @@ class SearchCityPanel extends Component {
     renderCities = () => {
         return this.props.selectCity.map((city) => {
             return {
-                label: city.city,
-                value: city
+                label: city.name,
+                value: city.name
             };
         });
     };

@@ -13,9 +13,9 @@ export const getNewMessageAction = (message) => {
     };
 };
 
-export const addedNewMessageInStateSaga = (message) => {
+export const addedNewMessageInActiveChatSaga = (message) => {
     return {
-        type: "ADDED_NEW_MESSAGE_IN_STATE_SAGA",
+        type: "ADDED_NEW_MESSAGE_IN_ACTIVE_CHAT_SAGA",
         payload: message
     };
 };
@@ -32,5 +32,13 @@ export const getActiveChatSaga = (chat) => {
     return {
         type: "GET_ACTIVE_CHAT_SAGA",
         payload: chat
+    };
+};
+
+export const updateMessagesInChatsSaga = (indexChat, newMessages) => {
+    return {
+        type: "UPDATE_MESSAGES_IN_CHATS_SAGA",
+        index: indexChat,
+        payload: newMessages
     };
 };

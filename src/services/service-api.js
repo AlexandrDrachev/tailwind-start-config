@@ -1,6 +1,9 @@
 
+import csc from 'country-state-city'
+
 const _ = require("lodash");
 const countryList = require('country-list');
+const { overwrite, getData } = require('country-list');
 
 export default class ServiceApi {
 
@@ -45,7 +48,20 @@ export default class ServiceApi {
     };
 
     getSelectCountry = async () => {
-        return await countryList.getNames();
+        // const countriesCSC = await csc.getAllCountries();
+        // console.log('countriesCSC: ', countriesCSC);
+        // const uaTestInfo = await getData("UA");
+        // console.log('testInfo: ', uaTestInfo);
+        // return await countryList.getNames();
+        return await csc.getAllCountries();
+    };
+
+    getSelectState = async (country) => {
+        return await csc.getStatesOfCountry(country);
+    };
+
+    getSelectCity = async (city) => {
+        return await csc.getCitiesOfState(city);
     };
 
     getCityFromCoords = async (coords) => {
